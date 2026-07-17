@@ -4,6 +4,14 @@ Proyecto conectado: `diamantes-pro-players-pro`
 
 Administrador autorizado: `nMOQ6jgrGWQGK6NFBroiZIT8gKH2`
 
+## 0. Revisar Authentication
+
+En **Firebase Authentication → Método de acceso**, confirma que estén habilitados:
+
+- **Correo y contraseña**, para el administrador.
+- **Anónimo**, para comprobantes y reacciones de visitantes.
+
+
 ## 1. Publicar las reglas de Firestore
 
 1. Abre Firebase Console.
@@ -11,7 +19,7 @@ Administrador autorizado: `nMOQ6jgrGWQGK6NFBroiZIT8gKH2`
 3. Reemplaza el contenido completo por el archivo `firestore.rules`.
 4. Pulsa **Publicar**.
 
-Las reglas permiten lectura pública del catálogo, pero solamente el UID autorizado puede modificar el contenido o gestionar solicitudes.
+Las reglas permiten lectura pública del catálogo y de los contadores de reacción. Solamente el UID autorizado puede modificar perfiles o gestionar solicitudes. Cada visitante autenticado anónimamente puede crear, cambiar o eliminar únicamente su propia reacción.
 
 ## 2. Bloquear Realtime Database
 
@@ -60,8 +68,18 @@ En Firestore deben aparecer estas colecciones:
 - `telegramVip_categories`
 - `telegramVip_testimonials`
 - `telegramVip_orders`
+- `telegramVip_reactions`
 
-## 6. Flujo de comprobantes
+## 6. Flujo de reacciones
+
+1. El visitante abre una publicación.
+2. Pulsa una de las seis reacciones.
+3. Firebase crea una sesión anónima si todavía no existe.
+4. Firestore guarda una sola reacción para ese visitante y esa publicación.
+5. Al elegir otra, reemplaza la anterior; al pulsar la misma nuevamente, la elimina.
+6. Los contadores se actualizan en tiempo real para todos los visitantes.
+
+## 7. Flujo de comprobantes
 
 Después de configurar Storage:
 
@@ -75,7 +93,7 @@ Después de configurar Storage:
 8. El administrador la ve en **Solicitudes** y **Comprobantes**.
 9. El administrador puede marcarla como verificada, registrar el enlace VIP y marcar el acceso como entregado.
 
-## 7. Seguridad importante
+## 8. Seguridad importante
 
 - No publiques la contraseña del administrador.
 - No incluyas archivos de cuentas de servicio dentro del HTML.

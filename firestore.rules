@@ -11,6 +11,15 @@ service cloud.firestore {
         && request.auth.uid == 'nMOQ6jgrGWQGK6NFBroiZIT8gKH2';
     }
 
+
+    function validReaction() {
+      return signedIn()
+        && request.resource.data.keys().hasAll(['emoji', 'updatedAt'])
+        && request.resource.data.keys().hasOnly(['emoji', 'updatedAt'])
+        && request.resource.data.emoji in ['❤️', '🔥', '😍', '🥵', '😈', '💋']
+        && request.resource.data.updatedAt is timestamp;
+    }
+
     function validOrder() {
       return signedIn()
         && request.resource.data.keys().hasAll([
@@ -76,6 +85,16 @@ service cloud.firestore {
     match /telegramVip_testimonials/{testimonialId} {
       allow read: if true;
       allow create, update, delete: if isAdmin();
+    }
+
+
+    match /telegramVip_reactions/{profileId}/posts/{postId}/telegramVip_post_reactions/{userId} {
+      allow read: if true;
+      allow create, update: if signedIn()
+        && request.auth.uid == userId
+        && validReaction();
+      allow delete: if signedIn()
+        && request.auth.uid == userId;
     }
 
     match /telegramVip_orders/{orderId} {

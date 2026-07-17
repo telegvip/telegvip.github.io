@@ -1,4 +1,4 @@
-## TELEGVIP — Versión moderna V6
+## TELEGVIP — Versión V8 · Publicaciones estilo Telegram
 
 # Panel de Acceso VIP para Telegram
 
@@ -8,15 +8,18 @@ Proyecto web listo para publicar y conectado al proyecto Firebase `diamantes-pro
 
 - Sitio público y panel administrador en `index.html`.
 - Firebase Authentication para el acceso administrativo.
-- Cloud Firestore para configuración, perfiles, categorías, testimonios y pedidos.
+- Cloud Firestore para configuración, perfiles, categorías, testimonios, pedidos y reacciones.
 - Cloud Storage para portadas, videos, capturas de testimonios y comprobantes.
 - Reglas listas para Firestore, Storage y Realtime Database.
 - Configuración opcional para Firebase Hosting.
-- Identidad visual azul Telegram, azul profundo y dorado basada en el logo TELEGVIP definitivo.
+- Identidad visual joven en azul Telegram, violeta y rosa.
+- Perfiles mostrados como publicaciones verticales estilo Telegram.
+- Descripciones independientes y seis reacciones configurables por publicación.
 - Favicon oficial TELEGVIP preparado para navegadores y móviles, generado directamente desde el mismo logo definitivo.
-- Header normal que desaparece al desplazarse por la página.
+- Header profesional y adaptable a escritorio y móviles.
 - Editor administrativo organizado por secciones desplegables.
 - Filtro general “Todos” editable y opcional desde Categorías.
+- Reacciones reales sincronizadas mediante Firebase Authentication anónima y Cloud Firestore.
 
 ## Publicar el código en GitHub
 
@@ -109,14 +112,17 @@ La carga de fotos, videos y comprobantes necesita que Cloud Storage esté habili
 | `favicon.ico` y `favicon-*.png` | Favicons generados desde el mismo logo TELEGVIP |
 | `apple-touch-icon.png` | Ícono para accesos directos en iPhone y iPad |
 | `site.webmanifest` | Identidad del sitio cuando se instala como acceso directo |
-| `firestore.rules` | Seguridad de Cloud Firestore |
+| `firestore.rules` | Seguridad de Cloud Firestore, pedidos y reacciones |
 | `storage.rules` | Seguridad de archivos y comprobantes |
 | `database.rules.json` | Bloqueo de Realtime Database, que este sitio no utiliza |
 | `firebase.json` | Configuración de despliegue y Firebase Hosting |
 | `.firebaserc` | Proyecto Firebase predeterminado |
-| `ARCHIVOS-A-ELIMINAR.md` | Lista exacta de recursos antiguos que puedes borrar de GitHub |
 | `FIREBASE-PASOS.md` | Guía detallada de configuración |
 
+
+## Publicaciones y reacciones V8
+
+La antigua galería fue reemplazada por publicaciones en formato 720 × 1080. Desde el administrador puedes subir cada foto o video, escribir su descripción y configurar los seis contadores iniciales. Las reacciones de los visitantes se guardan en Firebase y se ordenan de mayor a menor. Debes volver a publicar `firestore.rules`.
 
 ## Corrección del icono V7
 
