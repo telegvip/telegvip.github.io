@@ -7,12 +7,12 @@
   <title>TELEGVIP | Accesos privados por Telegram</title>
   <meta name="theme-color" content="#2AABEE">
   <meta name="color-scheme" content="light">
-  <link rel="icon" href="favicon.ico?v=11" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=11">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=11">
-  <link rel="icon" type="image/svg+xml" href="logo-telegvip.svg?v=11">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=11">
-  <link rel="manifest" href="site.webmanifest?v=11">
+  <link rel="icon" href="favicon.ico?v=12" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=12">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=12">
+  <link rel="icon" type="image/svg+xml" href="logo-telegvip.svg?v=12">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=12">
+  <link rel="manifest" href="site.webmanifest?v=12">
   <style>
     :root{--tg:#087cdb;--tg2:#005bc7;--navy:#041c3a;--ink:#071d3d;--muted:#60738b;--line:#dbe5f0;--soft:#f3f8fd;--green:#1eaa73;--red:#db6262;--shadow:0 18px 55px rgba(3,66,126,.12)}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:#fff}button,input,textarea,select{font:inherit}button{cursor:pointer}img,video{max-width:100%}.hide{display:none!important}.wrap{width:min(1180px,calc(100% - 40px));margin:auto}.icon{width:20px;height:20px;display:inline-block;vertical-align:middle;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.telegram-logo{width:43px;height:43px;border-radius:14px;background:linear-gradient(145deg,#39b6ec,var(--tg2));color:white;display:grid;place-items:center;line-height:0;overflow:hidden;flex:0 0 43px;box-shadow:0 8px 20px rgba(34,158,217,.28);padding:0!important}.telegram-logo .icon{display:block;width:23px;height:23px;margin:0;transform:none;transform-origin:center}
@@ -436,13 +436,131 @@
     @media(max-width:700px){.detail-grid{margin-bottom:14px}.profile-proof-grid{display:grid;grid-template-columns:1fr;overflow:visible}.profile-proof-card{min-width:0}.profile-proof-card .chat-shot,.real-proof-shot{max-height:none}.vip-join-activity{align-items:flex-start}.join-live{display:none}.review-slide .real-proof-shot{height:360px}}
     @media(prefers-reduced-motion:reduce){.join-icon,.join-icon>i,.vip-join-activity:before{animation:none!important}}
 
+
+    /* V12 · reproductor privado y protección visual del contenido */
+    #publicApp{
+      -webkit-user-select:none;
+      user-select:none;
+      -webkit-touch-callout:none;
+    }
+    #publicApp img,#publicApp video{
+      -webkit-user-drag:none;
+      user-drag:none;
+    }
+    #publicApp button,#publicApp a{-webkit-tap-highlight-color:transparent}
+    #publicApp input,#publicApp textarea,#publicApp select{
+      -webkit-user-select:text;
+      user-select:text;
+      -webkit-touch-callout:default;
+    }
+    .post-media:not(.secure-video-player){cursor:zoom-in}
+    .post-media.secure-video-player{
+      cursor:default;
+      background:#080c18;
+      position:relative;
+    }
+    .secure-video-player video{
+      cursor:pointer;
+      outline:0;
+    }
+    .secure-video-player .video-shield{
+      position:absolute;
+      z-index:4;
+      left:11px;
+      bottom:58px;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      min-height:25px;
+      padding:0 9px;
+      border-radius:999px;
+      color:rgba(255,255,255,.9);
+      background:rgba(7,13,26,.52);
+      border:1px solid rgba(255,255,255,.13);
+      backdrop-filter:blur(9px);
+      font-size:8px;
+      font-weight:850;
+      pointer-events:none;
+      opacity:.88;
+    }
+    .secure-video-player .video-shield .icon{width:12px;height:12px}
+    .video-center-play{
+      position:absolute;
+      z-index:6;
+      left:50%;top:50%;
+      width:64px;height:64px;
+      transform:translate(-50%,-50%);
+      border:1px solid rgba(255,255,255,.56);
+      border-radius:50%;
+      color:#fff;
+      background:linear-gradient(145deg,rgba(42,171,238,.92),rgba(109,93,251,.94));
+      box-shadow:0 14px 36px rgba(7,12,28,.36);
+      display:grid;
+      place-items:center;
+      transition:opacity .2s,transform .2s;
+    }
+    .video-center-play:hover{transform:translate(-50%,-50%) scale(1.05)}
+    .video-center-play svg{width:26px;height:26px;margin-left:3px;fill:currentColor}
+    .secure-video-player.is-playing .video-center-play{opacity:0;pointer-events:none;transform:translate(-50%,-50%) scale(.82)}
+    .video-control-layer{
+      position:absolute;
+      z-index:7;
+      left:0;right:0;bottom:0;
+      padding:30px 11px 10px;
+      background:linear-gradient(transparent,rgba(3,7,16,.9));
+      transition:opacity .22s;
+    }
+    .secure-video-player.is-playing:not(.controls-visible) .video-control-layer{opacity:0}
+    .secure-video-player.is-playing:not(.controls-visible){cursor:none}
+    .video-progress{
+      appearance:none;
+      -webkit-appearance:none;
+      display:block;
+      width:100%;height:4px;
+      margin:0 0 9px;
+      border:0;
+      border-radius:999px;
+      background:linear-gradient(90deg,#2aabee 0 var(--progress,0%),rgba(255,255,255,.28) var(--progress,0%) 100%);
+      cursor:pointer;
+    }
+    .video-progress::-webkit-slider-thumb{
+      -webkit-appearance:none;
+      width:13px;height:13px;border-radius:50%;
+      background:#fff;
+      box-shadow:0 2px 8px rgba(0,0,0,.35);
+    }
+    .video-progress::-moz-range-thumb{
+      width:13px;height:13px;border:0;border-radius:50%;background:#fff;
+    }
+    .video-controls-row{display:flex;align-items:center;gap:8px;color:white}
+    .video-control-btn{
+      width:30px;height:30px;padding:0;border:0;border-radius:9px;
+      display:grid;place-items:center;
+      color:#fff;background:rgba(255,255,255,.1);
+      transition:.18s;
+    }
+    .video-control-btn:hover{background:rgba(255,255,255,.2)}
+    .video-control-btn svg{width:16px;height:16px;fill:currentColor}
+    .video-time{font-size:9px;font-weight:800;font-variant-numeric:tabular-nums;text-shadow:0 1px 3px #000}
+    .video-controls-spacer{flex:1}
+    .video-no-download{
+      display:inline-flex;align-items:center;gap:5px;
+      font-size:8px;font-weight:850;color:rgba(255,255,255,.74);
+    }
+    .video-no-download .icon{width:12px;height:12px}
+    @media(max-width:700px){
+      .video-center-play{width:56px;height:56px}
+      .secure-video-player .video-shield{bottom:55px}
+      .video-no-download{display:none}
+    }
+
   </style>
 </head>
 <body>
   <div id="publicApp">
     <header id="siteHeader">
       <div class="wrap nav">
-        <button class="brand" onclick="showHome()"><img class="brand-logo" src="logo-telegvip.svg?v=11" width="44" height="44" onerror="this.onerror=null;this.src='favicon-192x192.png?v=11'" alt="Logo TELEGVIP"><span><strong class="js-brand-title">TELEGVIP</strong><small class="js-brand-subtitle">Accesos privados por Telegram</small></span></button>
+        <button class="brand" onclick="showHome()"><img class="brand-logo" src="logo-telegvip.svg?v=12" width="44" height="44" onerror="this.onerror=null;this.src='favicon-192x192.png?v=12'" alt="Logo TELEGVIP"><span><strong class="js-brand-title">TELEGVIP</strong><small class="js-brand-subtitle">Accesos privados por Telegram</small></span></button>
         <nav class="nav-links" id="navLinks"><button id="navHome" onclick="showHome()">Inicio</button><button id="navCatalog" onclick="goSection('catalogo')">Catálogo</button><button id="navSteps" onclick="goSection('comoFunciona')">Cómo funciona</button><button id="navReviews" onclick="goSection('opiniones')">Opiniones</button></nav>
         <div class="nav-actions"><button id="headerAdminBtn" class="btn btn-secondary" onclick="openAdmin()"><span data-icon="shield"></span><span id="headerAdminLabel">Administrar</span></button><button id="headerContactBtn" class="btn btn-primary" onclick="openTelegram()"><span data-icon="message"></span><span id="headerContactLabel">Contactar</span></button><button class="btn btn-secondary menu-btn" onclick="toggleMenu()"><span data-icon="menu"></span></button></div>
       </div>
@@ -456,14 +574,14 @@
       </section>
       <section id="catalogo"><div class="wrap"><div class="section-head"><div><span class="eyebrow" id="catalogEyebrow">PERFILES VIP VERIFICADOS</span><h2 id="catalogTitle">Encuentra tu próximo acceso VIP</h2><p id="catalogDescription">Compara contenido, frecuencia de publicación y precio antes de comprar. Todo claro desde el inicio.</p></div><label class="search"><span data-icon="search"></span><input id="searchInput" placeholder="Buscar creadora..." oninput="renderProfiles()"></label></div><div class="filters" id="filters"></div><div class="grid" id="profileGrid"></div></div></section>
       <section class="steps" id="comoFunciona"><div class="wrap"><div class="center-head"><span class="eyebrow" id="stepsEyebrow">SIMPLE, PRIVADO Y SEGURO</span><h2 id="stepsTitle">Entra en minutos, sin complicaciones</h2><p id="stepsDescription">Sabes qué compras, cuánto dura y cómo recibirás tu invitación.</p></div><div class="steps-grid"><article class="step-card"><span class="step-number">01</span><div class="step-icon"><span data-icon="heart"></span></div><h3 id="step1Title">Elige tu favorita</h3><p id="step1Text">Compara fotografías, videos y frecuencia de publicaciones antes de decidir.</p></article><article class="step-card"><span class="step-number">02</span><div class="step-icon"><span data-icon="card"></span></div><h3 id="step2Title">Paga de forma segura</h3><p id="step2Text">Utiliza tarjeta, criptomonedas o Binance Pay mediante el enlace protegido.</p></article><article class="step-card"><span class="step-number">03</span><div class="step-icon"><span data-icon="upload"></span></div><h3 id="step3Title">Confirma tu compra</h3><p id="step3Text">Adjunta una captura legible para que podamos verificar el pago rápidamente.</p></article><article class="step-card"><span class="step-number">04</span><div class="step-icon"><span data-icon="send"></span></div><h3 id="step4Title">Entra al grupo VIP privado</h3><p id="step4Text">Recibe por Telegram una invitación personal, privada y de un solo uso.</p></article></div><div class="notice"><span class="step-icon" style="margin:0"><span data-icon="lock"></span></span><div><strong id="noticeTitle">Tu enlace es único y personal</strong><p id="noticeText">No puede compartirse. Está asociado a una sola membresía y puede invalidarse si otra persona intenta utilizarlo.</p></div></div></div></section>
-      <section id="opiniones"><div class="wrap reviews-grid"><div class="reviews-copy"><span class="eyebrow" id="reviewsEyebrow">COMPRAS VERIFICADAS</span><div class="section-head"><div><h2 id="reviewsTitle">Compras reales.<br>Accesos entregados.</h2><p id="reviewsDescription">Desliza para ver experiencias reales de clientes que ya recibieron su acceso.</p></div></div><div id="testimonialCarousel"></div></div><div class="dark-panel" id="trustPanel"><div class="trust-head"><img class="brand-logo" src="logo-telegvip.svg?v=11" width="44" height="44" onerror="this.onerror=null;this.src='favicon-192x192.png?v=11'" alt="Logo TELEGVIP"><span><small id="trustEyebrow">ACCESOS VERIFICADOS</small><strong id="trustTitle">Compra privada y acompañada</strong></span></div><div class="feature"><span class="step-icon"><span data-icon="zap"></span></span><div><strong id="feature1Title">Entrega rápida</strong><p id="feature1Text">Verificamos tu pago y respondemos directamente por Telegram.</p></div></div><div class="feature"><span class="step-icon"><span data-icon="shield"></span></span><div><strong id="feature2Title">Pago protegido</strong><p id="feature2Text">Opciones seguras mediante Meru, Stripe y Binance Pay.</p></div></div><div class="feature"><span class="step-icon"><span data-icon="message"></span></span><div><strong id="feature3Title">Soporte privado</strong><p id="feature3Text">Sin llamadas: toda la atención se realiza por chat privado.</p></div></div><button id="trustContactBtn" onclick="openTelegram()" class="btn btn-secondary full" style="background:rgba(255,255,255,.08);color:white;border-color:rgba(255,255,255,.18)"><span data-icon="message"></span><span id="trustContactLabel">Hablar con soporte en Telegram</span></button></div></div></section>
-      <footer class="footer" id="siteFooter"><div class="wrap footer-grid"><div><div class="brand" style="color:white"><img class="brand-logo" src="logo-telegvip.svg?v=11" width="44" height="44" onerror="this.onerror=null;this.src='favicon-192x192.png?v=11'" alt="Logo TELEGVIP"><span><strong class="js-brand-title">TELEGVIP</strong><small class="js-brand-subtitle">Accesos privados por Telegram</small></span></div><p id="footerDescription">Encuentra contenido exclusivo y recibe tu acceso de forma segura, rápida y personalizada.</p></div><div><strong id="footerExploreTitle">Explorar</strong><button id="footerCatalogLink" onclick="goSection('catalogo')">Catálogo VIP</button><button id="footerStepsLink" onclick="goSection('comoFunciona')">Cómo funciona</button><button id="footerReviewsLink" onclick="goSection('opiniones')">Opiniones</button></div><div><strong id="footerHelpTitle">Ayuda</strong><button id="footerSupportLink" onclick="openTelegram()">Soporte por Telegram</button><button id="footerFaqLink">Preguntas frecuentes</button><button id="footerTermsLink">Términos del acceso</button></div></div><div class="wrap footer-bottom"><span id="footerCopyright">© 2026 Panel de Acceso VIP.</span><span id="footerTagline">Compra segura y atención privada</span></div></footer>
+      <section id="opiniones"><div class="wrap reviews-grid"><div class="reviews-copy"><span class="eyebrow" id="reviewsEyebrow">COMPRAS VERIFICADAS</span><div class="section-head"><div><h2 id="reviewsTitle">Compras reales.<br>Accesos entregados.</h2><p id="reviewsDescription">Desliza para ver experiencias reales de clientes que ya recibieron su acceso.</p></div></div><div id="testimonialCarousel"></div></div><div class="dark-panel" id="trustPanel"><div class="trust-head"><img class="brand-logo" src="logo-telegvip.svg?v=12" width="44" height="44" onerror="this.onerror=null;this.src='favicon-192x192.png?v=12'" alt="Logo TELEGVIP"><span><small id="trustEyebrow">ACCESOS VERIFICADOS</small><strong id="trustTitle">Compra privada y acompañada</strong></span></div><div class="feature"><span class="step-icon"><span data-icon="zap"></span></span><div><strong id="feature1Title">Entrega rápida</strong><p id="feature1Text">Verificamos tu pago y respondemos directamente por Telegram.</p></div></div><div class="feature"><span class="step-icon"><span data-icon="shield"></span></span><div><strong id="feature2Title">Pago protegido</strong><p id="feature2Text">Opciones seguras mediante Meru, Stripe y Binance Pay.</p></div></div><div class="feature"><span class="step-icon"><span data-icon="message"></span></span><div><strong id="feature3Title">Soporte privado</strong><p id="feature3Text">Sin llamadas: toda la atención se realiza por chat privado.</p></div></div><button id="trustContactBtn" onclick="openTelegram()" class="btn btn-secondary full" style="background:rgba(255,255,255,.08);color:white;border-color:rgba(255,255,255,.18)"><span data-icon="message"></span><span id="trustContactLabel">Hablar con soporte en Telegram</span></button></div></div></section>
+      <footer class="footer" id="siteFooter"><div class="wrap footer-grid"><div><div class="brand" style="color:white"><img class="brand-logo" src="logo-telegvip.svg?v=12" width="44" height="44" onerror="this.onerror=null;this.src='favicon-192x192.png?v=12'" alt="Logo TELEGVIP"><span><strong class="js-brand-title">TELEGVIP</strong><small class="js-brand-subtitle">Accesos privados por Telegram</small></span></div><p id="footerDescription">Encuentra contenido exclusivo y recibe tu acceso de forma segura, rápida y personalizada.</p></div><div><strong id="footerExploreTitle">Explorar</strong><button id="footerCatalogLink" onclick="goSection('catalogo')">Catálogo VIP</button><button id="footerStepsLink" onclick="goSection('comoFunciona')">Cómo funciona</button><button id="footerReviewsLink" onclick="goSection('opiniones')">Opiniones</button></div><div><strong id="footerHelpTitle">Ayuda</strong><button id="footerSupportLink" onclick="openTelegram()">Soporte por Telegram</button><button id="footerFaqLink">Preguntas frecuentes</button><button id="footerTermsLink">Términos del acceso</button></div></div><div class="wrap footer-bottom"><span id="footerCopyright">© 2026 Panel de Acceso VIP.</span><span id="footerTagline">Compra segura y atención privada</span></div></footer>
     </div>
     <div id="detailView" class="detail hide"></div>
   </div>
 
   <div id="adminApp" class="admin hide">
-    <aside class="sidebar" id="sidebar"><div class="admin-brand"><img class="brand-logo" src="logo-telegvip.svg?v=11" width="44" height="44" onerror="this.onerror=null;this.src='favicon-192x192.png?v=11'" alt="Logo TELEGVIP"><span><strong>TELEGVIP</strong><small>Control total del sitio</small></span></div><nav class="side-nav"><button data-section="dashboard" class="active" onclick="adminSection('dashboard',this)">Resumen</button><button data-section="profiles" onclick="adminSection('profiles',this)">Perfiles VIP</button><button data-section="content" onclick="adminSection('content',this)">Contenido y botones</button><button data-section="categories" onclick="adminSection('categories',this)">Categorías</button><button data-section="testimonials" onclick="adminSection('testimonials',this)">Capturas reales</button><button data-section="orders" onclick="adminSection('orders',this)">Solicitudes</button><button data-section="proofs" onclick="adminSection('proofs',this)">Comprobantes</button><button data-section="settings" onclick="adminSection('settings',this)">Pagos y contacto</button></nav><div class="side-bottom"><button class="btn btn-secondary full" onclick="closeAdmin()">Ver sitio público</button></div></aside>
+    <aside class="sidebar" id="sidebar"><div class="admin-brand"><img class="brand-logo" src="logo-telegvip.svg?v=12" width="44" height="44" onerror="this.onerror=null;this.src='favicon-192x192.png?v=12'" alt="Logo TELEGVIP"><span><strong>TELEGVIP</strong><small>Control total del sitio</small></span></div><nav class="side-nav"><button data-section="dashboard" class="active" onclick="adminSection('dashboard',this)">Resumen</button><button data-section="profiles" onclick="adminSection('profiles',this)">Perfiles VIP</button><button data-section="content" onclick="adminSection('content',this)">Contenido y botones</button><button data-section="categories" onclick="adminSection('categories',this)">Categorías</button><button data-section="testimonials" onclick="adminSection('testimonials',this)">Capturas reales</button><button data-section="orders" onclick="adminSection('orders',this)">Solicitudes</button><button data-section="proofs" onclick="adminSection('proofs',this)">Comprobantes</button><button data-section="settings" onclick="adminSection('settings',this)">Pagos y contacto</button></nav><div class="side-bottom"><button class="btn btn-secondary full" onclick="closeAdmin()">Ver sitio público</button></div></aside>
     <main class="admin-main"><div class="admin-top"><button class="btn btn-secondary menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')"><span data-icon="menu"></span></button><div><strong>Panel de Acceso VIP</strong><small id="adminUserLabel">Administrador autorizado</small></div><div class="admin-top-actions"><button class="btn btn-secondary" onclick="closeAdmin()"><span data-icon="eye"></span> Vista pública</button><button class="btn btn-danger" onclick="logoutAdmin()"><span data-icon="lock"></span> Cerrar sesión</button></div></div><div class="demo" id="firebaseStatus"><span class="sync-dot"></span><span><strong>Firebase:</strong> conectando con el proyecto diamantes-pro-players-pro…</span></div><div class="admin-content" id="adminContent"></div></main>
   </div>
   <div id="modalRoot"></div><div id="toast" class="toast hide"></div>
@@ -541,7 +659,7 @@
     function setText(id,value){const el=document.getElementById(id);if(el)el.textContent=value}
     function setVisible(id,visible){const el=document.getElementById(id);if(el)el.classList.toggle('hide',!visible)}
     function toggleMenu(){document.getElementById('navLinks').classList.toggle('open')}
-    function showHome(){document.getElementById('homeView').classList.remove('hide');document.getElementById('detailView').classList.add('hide');window.scrollTo(0,0)}
+    function showHome(){pauseAllSecureVideos();document.getElementById('homeView').classList.remove('hide');document.getElementById('detailView').classList.add('hide');window.scrollTo(0,0)}
     function goSection(id){showHome();setTimeout(()=>document.getElementById(id)?.scrollIntoView(),30);document.getElementById('navLinks').classList.remove('open')}
     function openTelegram(){const user=siteConfig.telegramUser.replace('@','').trim();if(!user){notify('Configura el usuario de Telegram');return}window.open(`https://t.me/${encodeURIComponent(user)}?text=${encodeURIComponent(siteConfig.telegramMessage)}`,'_blank','noopener')}
 
@@ -571,12 +689,38 @@
     function reactionButton(profileId,postId,item){const chosen=currentReaction(profileId,postId)===item.emoji;return `<button type="button" class="reaction-chip ${chosen?'selected':''}" title="${esc(reactionLabels[item.emoji]||'Reaccionar')}" onclick="reactToPost(event,${jsAttr(profileId)},${jsAttr(postId)},${jsAttr(item.emoji)})"><span class="reaction-emoji">${item.emoji}</span><span class="reaction-count">${formatReactionCount(item.count)}</span></button>`}
     function renderReactionBar(profileId,post){const sorted=reactionSummary(profileId,post),main=sorted.slice(0,3),extra=sorted.slice(3);return `${main.map(item=>reactionButton(profileId,post.id,item)).join('')}<button type="button" class="reaction-more" aria-label="Ver más reacciones" onclick="toggleReactionMenu(event,${jsAttr(profileId)},${jsAttr(post.id)})">+</button><div class="reaction-picker" id="reaction-picker-${esc(String(profileId))}-${esc(String(post.id))}">${extra.map(item=>reactionButton(profileId,post.id,item)).join('')}</div>`}
     function formatViews(value){const n=Math.max(0,Number(value)||0);if(n>=1000000)return `${(n/1000000).toFixed(n>=10000000?0:1)}M`;if(n>=1000)return `${(n/1000).toFixed(n>=10000?0:1)}K`;return n.toLocaleString('es')}
-    function postMediaMarkup(post,title){const video=isVideo(post.url)||post.type==='video',mode=post.coverMode==='cover'?' post-media-cover':'';if(video)return `<div class="post-media${mode}"><div class="post-media-bg" style="background-image:url('${esc(selected?.cover||'').replace(/'/g,'&#39;')}')"></div><video src="${esc(post.url)}" controls playsinline preload="metadata" aria-label="Video de ${esc(title)}"></video><span class="post-type-badge"><span data-icon="video"></span>Video</span></div>`;return `<div class="post-media${mode}"><div class="post-media-bg" style="background-image:url('${esc(post.url).replace(/'/g,'&#39;')}')"></div><img src="${esc(post.url)}" alt="Publicación de ${esc(title)}" loading="lazy" onclick="openPostLightbox(this.src)"><span class="post-type-badge"><span data-icon="image"></span>Foto</span></div>`}
+    function postMediaMarkup(post,title){const video=isVideo(post.url)||post.type==='video',mode=post.coverMode==='cover'?' post-media-cover':'';if(video)return `<div class="post-media secure-video-player${mode}" data-secure-video-player><div class="post-media-bg" style="background-image:url('${esc(selected?.cover||'').replace(/'/g,'&#39;')}')"></div><video src="${esc(post.url)}" playsinline preload="metadata" controlslist="nodownload noplaybackrate noremoteplayback" disablepictureinpicture disableremoteplayback aria-label="Video de ${esc(title)}"></video><span class="post-type-badge"><span data-icon="video"></span>Video</span><span class="video-shield"><span data-icon="lock"></span>Vista previa protegida</span><button class="video-center-play" type="button" data-video-action="toggle" aria-label="Reproducir video"><svg viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z"/></svg></button><div class="video-control-layer"><input class="video-progress" type="range" min="0" max="1000" value="0" aria-label="Progreso del video"><div class="video-controls-row"><button class="video-control-btn" type="button" data-video-action="toggle" aria-label="Reproducir o pausar"><svg class="video-play-icon" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z"/></svg></button><span class="video-time">0:00 / 0:00</span><span class="video-controls-spacer"></span><span class="video-no-download"><span data-icon="shield"></span>Contenido protegido</span><button class="video-control-btn" type="button" data-video-action="mute" aria-label="Silenciar"><svg class="video-volume-icon" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Zm4 4a4 4 0 0 1 0 6m2-8a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button><button class="video-control-btn" type="button" data-video-action="fullscreen" aria-label="Pantalla completa"><svg viewBox="0 0 24 24"><path d="M8 3H3v5h2V5h3V3Zm8 0v2h3v3h2V3h-5ZM5 16H3v5h5v-2H5v-3Zm16 0h-2v3h-3v2h5v-5Z"/></svg></button></div></div></div>`;return `<div class="post-media${mode}"><div class="post-media-bg" style="background-image:url('${esc(post.url).replace(/'/g,'&#39;')}')"></div><img src="${esc(post.url)}" alt="Publicación de ${esc(title)}" loading="lazy" draggable="false" onclick="openPostLightbox(this.src)"><span class="post-type-badge"><span data-icon="image"></span>Foto</span></div>`}
     function renderPost(profile,post,index){return `<article class="telegram-post" data-post-type="${post.type==='video'||isVideo(post.url)?'video':'photo'}"><div class="post-head"><img class="post-avatar" src="${esc(profile.cover)}" alt="${esc(profile.title)}"><span class="post-author"><strong>${esc(profile.title)} <span class="verified">●</span></strong><small>${esc(profile.handle)} · grupo VIP privado</small></span><span class="post-channel-badge">VISTA PREVIA</span></div>${postMediaMarkup(post,profile.title)}<div class="post-content"><p class="post-caption">${esc(post.caption||'')}</p><div class="post-meta"><span>${esc(post.publishedLabel||'Hoy')}</span><span><span data-icon="eye"></span>${formatViews(post.views)} vistas</span></div><div class="post-reactions" data-profile-id="${esc(String(profile.id))}" data-post-id="${esc(String(post.id))}">${renderReactionBar(profile.id,post)}</div></div></article>`}
     function detailPostsForFilter(){if(!selected)return[];const posts=selected.posts||[];return posts.filter(post=>detailFilter==='all'||(detailFilter==='video'?(post.type==='video'||isVideo(post.url)):!(post.type==='video'||isVideo(post.url))))}
-    function renderDetailPosts(){const holder=document.getElementById('detailPostsGrid');if(!holder||!selected)return;const all=detailPostsForFilter(),visible=detailExpanded?all:all.slice(0,4);holder.innerHTML=visible.length?visible.map((post,index)=>renderPost(selected,post,index)).join(''):'<div class="feed-empty" style="grid-column:1/-1">No hay contenido de este tipo todavía.</div>';const btn=document.getElementById('detailLoadMore');if(btn){btn.classList.toggle('hide',all.length<=4);btn.textContent=detailExpanded?'Mostrar menos publicaciones':`Mostrar ${Math.max(0,all.length-4)} publicaciones más`}hydrateIcons(holder)}
+    function renderDetailPosts(){const holder=document.getElementById('detailPostsGrid');if(!holder||!selected)return;pauseAllSecureVideos();const all=detailPostsForFilter(),visible=detailExpanded?all:all.slice(0,4);holder.innerHTML=visible.length?visible.map((post,index)=>renderPost(selected,post,index)).join(''):'<div class="feed-empty" style="grid-column:1/-1">No hay contenido de este tipo todavía.</div>';const btn=document.getElementById('detailLoadMore');if(btn){btn.classList.toggle('hide',all.length<=4);btn.textContent=detailExpanded?'Mostrar menos publicaciones':`Mostrar ${Math.max(0,all.length-4)} publicaciones más`}hydrateIcons(holder);initSecureVideoPlayers(holder)}
     function setDetailFilter(filter){detailFilter=filter;detailExpanded=false;document.querySelectorAll('.detail-filter-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.filter===filter));renderDetailPosts()}
     function toggleDetailPosts(){detailExpanded=!detailExpanded;renderDetailPosts()}
+
+    function mediaTime(seconds){if(!Number.isFinite(seconds)||seconds<0)return'0:00';const whole=Math.floor(seconds),minutes=Math.floor(whole/60),secs=String(whole%60).padStart(2,'0');return`${minutes}:${secs}`}
+    function pauseAllSecureVideos(except=null){document.querySelectorAll('[data-secure-video-player] video').forEach(video=>{if(video!==except&&!video.paused)video.pause()})}
+    function initSecureVideoPlayers(scope=document){scope.querySelectorAll('[data-secure-video-player]:not([data-player-ready])').forEach(player=>{
+      player.dataset.playerReady='true';const video=player.querySelector('video'),progress=player.querySelector('.video-progress'),time=player.querySelector('.video-time'),playIcon=player.querySelector('.video-play-icon'),volumeIcon=player.querySelector('.video-volume-icon');let controlsTimer;
+      video.controls=false;video.setAttribute('controlsList','nodownload noplaybackrate noremoteplayback');video.disablePictureInPicture=true;video.disableRemotePlayback=true;video.setAttribute('oncontextmenu','return false');
+      const showControls=()=>{player.classList.add('controls-visible');clearTimeout(controlsTimer);if(!video.paused)controlsTimer=setTimeout(()=>player.classList.remove('controls-visible'),1900)};
+      const sync=()=>{const duration=Number.isFinite(video.duration)?video.duration:0,current=Number.isFinite(video.currentTime)?video.currentTime:0,value=duration?Math.round(current/duration*1000):0;progress.value=value;progress.style.setProperty('--progress',`${value/10}%`);time.textContent=`${mediaTime(current)} / ${mediaTime(duration)}`;player.classList.toggle('is-playing',!video.paused);playIcon.innerHTML=video.paused?'<path d="m8 5 11 7-11 7V5Z"/>':'<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>';volumeIcon.innerHTML=video.muted||video.volume===0?'<path d="M11 5 6 9H3v6h3l5 4V5Zm4 5 5 5m0-5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>':'<path d="M11 5 6 9H3v6h3l5 4V5Zm4 4a4 4 0 0 1 0 6m2-8a7 7 0 0 1 0 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'};
+      const toggle=()=>{if(video.paused){pauseAllSecureVideos(video);video.play().catch(()=>{});}else video.pause();showControls()};
+      player.querySelectorAll('[data-video-action="toggle"]').forEach(button=>button.addEventListener('click',event=>{event.stopPropagation();toggle()}));
+      player.querySelector('[data-video-action="mute"]').addEventListener('click',event=>{event.stopPropagation();video.muted=!video.muted;sync();showControls()});
+      player.querySelector('[data-video-action="fullscreen"]').addEventListener('click',event=>{event.stopPropagation();const request=player.requestFullscreen||player.webkitRequestFullscreen;if(request)request.call(player);showControls()});
+      progress.addEventListener('input',event=>{event.stopPropagation();if(Number.isFinite(video.duration))video.currentTime=(Number(progress.value)/1000)*video.duration;sync();showControls()});
+      video.addEventListener('click',toggle);video.addEventListener('play',()=>{pauseAllSecureVideos(video);sync();showControls()});video.addEventListener('pause',sync);video.addEventListener('timeupdate',sync);video.addEventListener('loadedmetadata',sync);video.addEventListener('durationchange',sync);video.addEventListener('volumechange',sync);video.addEventListener('ended',()=>{video.currentTime=0;sync();showControls()});
+      player.addEventListener('mousemove',showControls);player.addEventListener('touchstart',showControls,{passive:true});player.addEventListener('mouseleave',()=>{if(!video.paused)player.classList.remove('controls-visible')});
+      sync();showControls();
+    })}
+    function publicContentVisible(){const app=document.getElementById('publicApp');return app&&!app.classList.contains('hide')}
+    let protectionNoticeAt=0;
+    function protectedNotice(){const now=Date.now();if(now-protectionNoticeAt>1800){protectionNoticeAt=now;notify('Contenido protegido: descarga y copia deshabilitadas')}}
+    document.addEventListener('contextmenu',event=>{if(publicContentVisible()&&event.target.closest('#publicApp')){event.preventDefault();protectedNotice()}},{capture:true});
+    document.addEventListener('copy',event=>{if(publicContentVisible()&&document.activeElement?.closest?.('#publicApp')&&!document.activeElement.matches('input,textarea')){event.preventDefault();protectedNotice()}},{capture:true});
+    document.addEventListener('cut',event=>{if(publicContentVisible()&&event.target.closest?.('#publicApp')&&!event.target.matches('input,textarea')){event.preventDefault();protectedNotice()}},{capture:true});
+    document.addEventListener('dragstart',event=>{if(publicContentVisible()&&event.target.closest?.('#publicApp')&&event.target.matches('img,video'))event.preventDefault()},{capture:true});
+    document.addEventListener('keydown',event=>{if(!publicContentVisible())return;const key=event.key.toLowerCase();if((event.ctrlKey||event.metaKey)&&['c','s','u'].includes(key)&&!event.target.matches('input,textarea')){event.preventDefault();protectedNotice()}},{capture:true});
+
     function openPostLightbox(src){document.getElementById('modalRoot').innerHTML=`<div class="overlay" onclick="if(event.target===this)closeModal()"><div style="position:relative;max-width:min(760px,94vw);max-height:90vh"><button class="close" onclick="closeModal()">×</button><img src="${esc(src)}" alt="Vista ampliada" style="display:block;max-height:88vh;border-radius:18px;box-shadow:0 30px 80px rgba(0,0,0,.4)"></div></div>`}
     function profileTestimonialsMarkup(){const list=testimonials.filter(t=>t.visible!==false&&t.image);if(!list.length)return'';return `<section class="profile-proof-section" id="profileProofSection"><div class="proof-section-head"><div><h2>Clientes que ya recibieron su acceso</h2><p>Capturas reales tomadas desde el teléfono, con los datos personales ocultos.</p></div><span class="proof-trust"><span data-icon="shield"></span>${list.length} ${list.length===1?'captura real':'capturas reales'}</span></div><div class="profile-proof-grid" id="profileProofGrid">${list.map((t,index)=>`<article class="profile-proof-card ${index>=3?'proof-hidden':''}" data-proof-index="${index}">${testimonialVisual(t,true)}</article>`).join('')}</div>${list.length>3?`<button class="proof-show-more" id="profileProofMore" type="button" onclick="showMoreProfileProofs()"><span data-icon="image"></span>Ver ${Math.min(3,list.length-3)} capturas más</button>`:''}<div class="vip-join-activity" aria-live="polite"><span class="join-icon"><span data-icon="send"></span><i></i></span><span class="join-copy"><strong>Nuevo usuario agregado al grupo VIP</strong><small>Invitación privada aceptada correctamente</small></span><span class="join-live"><i></i> ACTIVO</span></div><div class="proof-privacy"><span data-icon="shield"></span><span>Las capturas deben ocultar nombres, números, fotografías, correos y cualquier dato que permita identificar al cliente.</span></div></section>`}
     function showMoreProfileProofs(){const hidden=[...document.querySelectorAll('#profileProofGrid .profile-proof-card.proof-hidden')],next=hidden.slice(0,3);next.forEach(card=>card.classList.remove('proof-hidden'));const remaining=hidden.length-next.length,button=document.getElementById('profileProofMore');if(!button)return;if(remaining<=0){button.remove();return}button.innerHTML=`<span data-icon="image"></span>Ver ${Math.min(3,remaining)} capturas más`;hydrateIcons(button)}
@@ -608,9 +752,9 @@
     function reviewNext(dir){setReview(reviewIndex+dir)}function startReviewAuto(){clearInterval(reviewTimer);if(testimonials.filter(t=>t.visible!==false&&t.image).length>1)reviewTimer=setInterval(()=>reviewNext(1),5200)}
 
     function openAdmin(){if(!window.FirebaseVIP?.ready){notify('Firebase todavía está iniciando');return}if(window.FirebaseVIP.isAdmin()){enterAdmin();return}showAdminLogin()}
-    function showAdminLogin(){document.getElementById('modalRoot').innerHTML=`<div class="overlay"><form class="login-box" onsubmit="loginAdmin(event)"><img class="login-mark brand-logo" src="logo-telegvip.svg?v=11" width="44" height="44" onerror="this.onerror=null;this.src='favicon-192x192.png?v=11'" alt="Logo TELEGVIP"><h2>Acceso administrador</h2><p>Ingresa con el usuario autorizado en Firebase Authentication. Los compradores nunca verán este panel.</p><div id="loginError" class="login-error hide"></div><label class="field">Correo electrónico<input name="email" type="email" autocomplete="username" required placeholder="tu-correo@gmail.com"></label><label class="field">Contraseña<input name="password" type="password" autocomplete="current-password" required placeholder="Tu contraseña de Firebase"></label><button class="btn btn-primary full" id="loginButton" type="submit"><span data-icon="shield"></span>Entrar al panel</button></form></div>`;hydrateIcons(document.getElementById('modalRoot'))}
+    function showAdminLogin(){document.getElementById('modalRoot').innerHTML=`<div class="overlay"><form class="login-box" onsubmit="loginAdmin(event)"><img class="login-mark brand-logo" src="logo-telegvip.svg?v=12" width="44" height="44" onerror="this.onerror=null;this.src='favicon-192x192.png?v=12'" alt="Logo TELEGVIP"><h2>Acceso administrador</h2><p>Ingresa con el usuario autorizado en Firebase Authentication. Los compradores nunca verán este panel.</p><div id="loginError" class="login-error hide"></div><label class="field">Correo electrónico<input name="email" type="email" autocomplete="username" required placeholder="tu-correo@gmail.com"></label><label class="field">Contraseña<input name="password" type="password" autocomplete="current-password" required placeholder="Tu contraseña de Firebase"></label><button class="btn btn-primary full" id="loginButton" type="submit"><span data-icon="shield"></span>Entrar al panel</button></form></div>`;hydrateIcons(document.getElementById('modalRoot'))}
     async function loginAdmin(e){e.preventDefault();const button=document.getElementById('loginButton'),errorBox=document.getElementById('loginError'),f=new FormData(e.target);button.disabled=true;button.textContent='Verificando acceso…';errorBox.classList.add('hide');try{await window.FirebaseVIP.signInAdmin(f.get('email').trim(),f.get('password'));closeModal();enterAdmin()}catch(error){console.error(error);errorBox.textContent=firebaseMessage(error);errorBox.classList.remove('hide');button.disabled=false;button.innerHTML='<span data-icon="shield"></span>Entrar al panel';hydrateIcons(button)}}
-    function enterAdmin(){document.getElementById('publicApp').classList.add('hide');document.getElementById('adminApp').classList.remove('hide');document.getElementById('adminUserLabel').textContent=window.FirebaseVIP?.currentUserEmail()||'Administrador autorizado';adminSection(adminCurrent);window.scrollTo(0,0)}
+    function enterAdmin(){pauseAllSecureVideos();document.getElementById('publicApp').classList.add('hide');document.getElementById('adminApp').classList.remove('hide');document.getElementById('adminUserLabel').textContent=window.FirebaseVIP?.currentUserEmail()||'Administrador autorizado';adminSection(adminCurrent);window.scrollTo(0,0)}
     function closeAdmin(){document.getElementById('adminApp').classList.add('hide');document.getElementById('publicApp').classList.remove('hide');applySiteConfig();window.scrollTo(0,0)}
     async function logoutAdmin(){try{await window.FirebaseVIP.signOutAdmin()}finally{closeAdmin();notify('Sesión administrativa cerrada')}}
     async function syncAllFirebase(){if(!window.FirebaseVIP?.isAdmin()){showAdminLogin();return}firebaseVipStatus('loading','sincronizando todo el contenido…');try{await window.FirebaseVIP.migrateAll(window.getFirebaseSeedData());firebaseVipStatus('online','todo el contenido está sincronizado');notify('Contenido sincronizado con Firebase')}catch(error){console.error(error);firebaseVipStatus('error',firebaseMessage(error));notify('No se pudo sincronizar: '+firebaseMessage(error))}}
