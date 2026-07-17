@@ -14,7 +14,7 @@ service firebase.storage {
     function validMedia(maxBytes) {
       return request.resource != null
         && request.resource.size < maxBytes
-        && request.resource.contentType.matches('(image|video)/.*');
+        && request.resource.contentType.matches('(image|video|audio)/.*');
     }
 
     function validImage(maxBytes) {
