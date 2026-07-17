@@ -99,3 +99,30 @@ Después de configurar Storage:
 - No incluyas archivos de cuentas de servicio dentro del HTML.
 - No pongas claves secretas de Stripe ni tokens de Telegram en Firestore.
 - El token del futuro bot de Telegram se guardará con Secret Manager y Cloud Functions.
+
+## 9. Cambios necesarios para V14
+
+Vuelve a publicar `firestore.rules` y `storage.rules`. V14 agrega:
+
+- Datos de contacto del comprador.
+- USDT, USDC y Binance Pay.
+- Lectura privada de **Mis accesos** para el propietario anónimo de la solicitud.
+- Colección pública y anonimizada `telegramVip_activity`.
+- Carpeta pública de QR `telegram-vip/settings/` administrable únicamente por el UID autorizado.
+
+## 10. Notificaciones privadas por Telegram
+
+La carpeta `functions/` contiene una función opcional que se ejecuta cuando se crea una solicitud.
+
+Desde la raíz del proyecto:
+
+```bash
+firebase functions:secrets:set TELEGRAM_BOT_TOKEN
+firebase functions:secrets:set TELEGRAM_CHAT_ID
+firebase deploy --only functions:notifyTelegramVipOrder
+```
+
+- `TELEGRAM_BOT_TOKEN`: token entregado por BotFather.
+- `TELEGRAM_CHAT_ID`: identificador del chat privado donde recibirás los comprobantes.
+
+No escribas estos valores en `index.html`, Firestore ni GitHub.

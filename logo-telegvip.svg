@@ -15,7 +15,6 @@
 </defs>
 <rect x="22" y="22" width="468" height="468" rx="118" fill="url(#bg)"/>
 <circle cx="145" cy="118" r="94" fill="#fff" opacity=".09"/>
-<g id="icon-content" transform="translate(-8 -40) translate(256 256) scale(.95) translate(-256 -256)">
 <path d="M95 246.7 394.5 125c22.4-9.1 42.8 12.1 32.8 34.1L299.8 440.3c-8.8 19.4-36.5 18.3-43.8-1.7l-43.3-119.1-117.1-42.1c-20.6-7.4-20.9-22.4-.6-30.7Z" fill="#fff" filter="url(#shadow)"/>
 <path d="m212.7 319.5 151.7-137.8-112.1 165.5 3.7 91.4-43.3-119.1Z" fill="#DFF5FF"/>
 <path d="m212.7 319.5 151.7-137.8-99.8 166.7-8.6 90.2-43.3-119.1Z" fill="#C9E9FA" opacity=".82"/>
@@ -25,7 +24,5 @@
   <rect x="354" y="380" width="75" height="63" rx="21" fill="#fff"/>
   <circle cx="391.5" cy="408" r="8" fill="#F23B91"/>
   <path d="M391.5 415v11" stroke="#F23B91" stroke-width="7" stroke-linecap="round"/>
-</g>
-
 </g>
 </svg>

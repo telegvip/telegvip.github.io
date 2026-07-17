@@ -135,3 +135,13 @@ La antigua galería fue reemplazada por publicaciones en formato 720 × 1080. De
 ## Corrección del icono V7
 
 El área azul conserva el mismo tamaño visible. Solo el avión y la insignia interna se redujeron 5 % y se centraron ópticamente. Los archivos SVG, PNG, WebP, ICO y Apple Touch Icon tienen transparencia fuera del cuadro azul. Para evitar que el navegador muestre el recurso anterior, reemplaza también `index.html` y recarga con `Ctrl + F5`.
+
+## Checkout y seguimiento V14
+
+El checkout acepta tarjeta, USDT, USDC y Binance Pay. Los QR y billeteras se configuran en **Administrador → Pagos y contacto**. El correo es obligatorio; WhatsApp y Telegram son opcionales.
+
+El botón **Mis accesos** utiliza la sesión anónima persistente de Firebase y el almacenamiento local del navegador. Cuando el administrador registra el enlace y marca la solicitud como entregada, el comprador puede abrirlo desde esa sección sin crear una contraseña.
+
+La actividad que aparece bajo la tarjeta de compra se alimenta únicamente de pedidos reales verificados. No utiliza actividad simulada.
+
+Para recibir cada comprobante en un chat privado de Telegram, consulta la sección de Functions en `FIREBASE-PASOS.md`.

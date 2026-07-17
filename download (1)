@@ -1,8 +1,71 @@
-.firebase/
-firebase-debug.log
-firebase-debug.*.log
-node_modules/
-.DS_Store
-.env
-.env.*
-*.local
+const { onDocumentCreated } = require("firebase-functions/v2/firestore");
+const { defineSecret } = require("firebase-functions/params");
+const { initializeApp } = require("firebase-admin/app");
+
+initializeApp();
+
+const TELEGRAM_BOT_TOKEN = defineSecret("TELEGRAM_BOT_TOKEN");
+const TELEGRAM_CHAT_ID = defineSecret("TELEGRAM_CHAT_ID");
+
+function escapeHtml(value = "") {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+exports.notifyTelegramVipOrder = onDocumentCreated(
+  {
+    document: "telegramVip_orders/{orderId}",
+    region: "us-central1",
+    secrets: [TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID],
+  },
+  async (event) => {
+    const order = event.data?.data();
+    if (!order) return;
+
+    const token = TELEGRAM_BOT_TOKEN.value();
+    const chatId = TELEGRAM_CHAT_ID.value();
+    if (!token || !chatId) return;
+
+    const caption = [
+      "<b>Nuevo comprobante TELEGVIP</b>",
+      `Solicitud: <code>${escapeHtml(order.orderCode || event.params.orderId)}</code>`,
+      `Perfil: <b>${escapeHtml(order.profileTitle || "Acceso VIP")}</b>`,
+      `Cliente: ${escapeHtml(order.buyerName || "Sin nombre")}`,
+      `Correo: ${escapeHtml(order.buyerEmail || "Sin correo")}`,
+      `WhatsApp: ${escapeHtml(order.buyerWhatsApp || "No indicado")}`,
+      `Telegram: ${escapeHtml(order.buyerTelegram || "No indicado")}`,
+      `Pago: <b>${escapeHtml(order.paymentMethod || "No indicado")}</b>`,
+      `Total: <b>$${Number(order.price || 0).toFixed(2)} USD</b>`,
+    ].join("\n");
+
+    const base = `https://api.telegram.org/bot${token}`;
+    const body = new URLSearchParams({
+      chat_id: chatId,
+      parse_mode: "HTML",
+      caption,
+      photo: order.proofUrl || "",
+    });
+
+    let response;
+    if (order.proofUrl) {
+      response = await fetch(`${base}/sendPhoto`, { method: "POST", body });
+    }
+
+    if (!response || !response.ok) {
+      const fallback = new URLSearchParams({
+        chat_id: chatId,
+        parse_mode: "HTML",
+        text: caption,
+      });
+      const messageResponse = await fetch(`${base}/sendMessage`, {
+        method: "POST",
+        body: fallback,
+      });
+      if (!messageResponse.ok) {
+        throw new Error(`Telegram API error: ${await messageResponse.text()}`);
+      }
+    }
+  }
+);

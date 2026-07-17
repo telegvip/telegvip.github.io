@@ -18,9 +18,13 @@
       "README.md",
       "FIREBASE-PASOS.md",
       "**/.*",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      "functions/**"
     ],
     "cleanUrls": false,
     "trailingSlash": false
+  },
+  "functions": {
+    "source": "functions"
   }
 }
