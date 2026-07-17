@@ -1,9 +1,15 @@
-TELEGVIP · PAQUETE COMPLETO V5
+TELEGVIP · PAQUETE COMPLETO V7 · ICONO CENTRADO
 
-Esta versión usa el logo definitivo proporcionado por el propietario y una paleta coordinada con su fondo azul y su insignia dorada VIP.
+Esta versión conserva el rediseño moderno V6 y corrige exclusivamente el logo y todos sus favicons.
 
-ARCHIVOS PRINCIPALES
-- index.html
+CAMBIO PRINCIPAL
+- El dibujo interno del icono es 5 % más pequeño.
+- Está centrado correctamente dentro del cuadro azul.
+- Todos los recursos tienen transparencia real fuera del cuadro redondeado.
+
+ARCHIVOS DE IMAGEN QUE DEBES REEMPLAZAR EN GITHUB
+- logo-telegvip.svg
+- logo-telegvip.png
 - logo-telegvip.webp
 - favicon.ico
 - favicon-16x16.png
@@ -12,21 +18,12 @@ ARCHIVOS PRINCIPALES
 - favicon-512x512.png
 - apple-touch-icon.png
 - site.webmanifest
-- firebase.json
-- .firebaserc
-- .nojekyll
-- firestore.rules
-- storage.rules
-- database.rules.json
-- README.md
-- FIREBASE-PASOS.md
-- ARCHIVOS-A-ELIMINAR.md
 
-IMPORTANTE
-1. Descomprime el ZIP.
-2. Sube el contenido de la carpeta, no el ZIP, a la raíz de GitHub.
-3. Reemplaza index.html, el manifest y todos los favicons.
-4. Elimina del repositorio los logos antiguos indicados en ARCHIVOS-A-ELIMINAR.md.
-5. Recarga la página con Ctrl + F5.
+También debes reemplazar `index.html`, porque contiene la versión de caché v=7.
 
-El favicon y todos los logos visibles se generan a partir del mismo archivo `logo-telegvip.webp`.
+SUBIDA A GITHUB
+1. Descomprime este ZIP.
+2. Abre la carpeta TELEGVIP-REDISENO-MODERNO-v7-ICONO-CENTRADO.
+3. Sube todos sus archivos a la raíz del repositorio.
+4. Confirma el reemplazo de los archivos existentes.
+5. Recarga la web con Ctrl + F5.

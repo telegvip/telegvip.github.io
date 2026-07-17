@@ -105,7 +105,7 @@ La carga de fotos, videos y comprobantes necesita que Cloud Storage esté habili
 | Archivo | Función |
 | --- | --- |
 | `index.html` | Página pública, checkout y panel administrador |
-| `logo-telegvip.webp` | Logo único y optimizado utilizado en header, panel, login y footer |
+| `logo-telegvip.svg`, `.png` y `.webp` | Logo corregido, transparente, 5 % más pequeño y centrado |
 | `favicon.ico` y `favicon-*.png` | Favicons generados desde el mismo logo TELEGVIP |
 | `apple-touch-icon.png` | Ícono para accesos directos en iPhone y iPad |
 | `site.webmanifest` | Identidad del sitio cuando se instala como acceso directo |
@@ -116,3 +116,8 @@ La carga de fotos, videos y comprobantes necesita que Cloud Storage esté habili
 | `.firebaserc` | Proyecto Firebase predeterminado |
 | `ARCHIVOS-A-ELIMINAR.md` | Lista exacta de recursos antiguos que puedes borrar de GitHub |
 | `FIREBASE-PASOS.md` | Guía detallada de configuración |
+
+
+## Corrección del icono V7
+
+El área azul conserva el mismo tamaño visible. Solo el avión y la insignia interna se redujeron 5 % y se centraron ópticamente. Los archivos SVG, PNG, WebP, ICO y Apple Touch Icon tienen transparencia fuera del cuadro azul. Para evitar que el navegador muestre el recurso anterior, reemplaza también `index.html` y recarga con `Ctrl + F5`.
