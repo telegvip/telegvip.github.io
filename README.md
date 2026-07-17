@@ -1,3 +1,7 @@
+# TELEGVIP V10
+
+Versión con perfil compacto, publicaciones profesionales y editor administrativo con scroll completo.
+
 ## TELEGVIP — Versión V8 · Publicaciones estilo Telegram
 
 # Panel de Acceso VIP para Telegram
