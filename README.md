@@ -10,12 +10,17 @@ Proyecto web listo para publicar y conectado al proyecto Firebase `diamantes-pro
 - Cloud Storage para portadas, videos, capturas de testimonios y comprobantes.
 - Reglas listas para Firestore, Storage y Realtime Database.
 - Configuración opcional para Firebase Hosting.
+- Identidad visual azul marino, azul eléctrico y dorado basada en el logo oficial.
+- Favicon oficial TELEGVIP preparado para navegadores y móviles, con respaldo incrustado en `index.html` para evitar que aparezca el ícono genérico.
+- Header normal que desaparece al desplazarse por la página.
+- Editor administrativo organizado por secciones desplegables.
+- Filtro general “Todos” editable y opcional desde Categorías.
 
 ## Publicar el código en GitHub
 
 1. Descomprime el ZIP.
 2. Crea un repositorio vacío en GitHub.
-3. Sube **el contenido de esta carpeta**, no solamente el archivo ZIP.
+3. Sube **el contenido de esta carpeta**, no solamente el archivo ZIP. En GitHub debes reemplazar también los archivos de favicon y logo.
 4. Comprueba que `index.html` esté en la raíz del repositorio.
 
 No se necesita compilar ni instalar dependencias: es un sitio HTML estático.
@@ -98,10 +103,15 @@ La carga de fotos, videos y comprobantes necesita que Cloud Storage esté habili
 | Archivo | Función |
 | --- | --- |
 | `index.html` | Página pública, checkout y panel administrador |
+| `favicon.ico` y `favicon-*.png` | Ícono TELEGVIP del navegador y marca visual del sitio |
+| `logo-telegvip-icon.webp` | Versión ligera y recortada del logo para header, panel, login y footer |
+| `icono-telegvip.webp` | Copia exacta del ícono oficial proporcionado |
+| `logo-telegvip-original.webp` | Copia completa de respaldo del logo oficial |
+| `apple-touch-icon.png` | Ícono para accesos directos en iPhone y iPad |
+| `site.webmanifest` | Identidad del sitio cuando se instala como acceso directo |
 | `firestore.rules` | Seguridad de Cloud Firestore |
 | `storage.rules` | Seguridad de archivos y comprobantes |
 | `database.rules.json` | Bloqueo de Realtime Database, que este sitio no utiliza |
 | `firebase.json` | Configuración de despliegue y Firebase Hosting |
 | `.firebaserc` | Proyecto Firebase predeterminado |
 | `FIREBASE-PASOS.md` | Guía detallada de configuración |
-
