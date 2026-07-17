@@ -1,10 +1,10 @@
-PAQUETE TELEGVIP CON FAVICON
+TELEGVIP · PAQUETE COMPLETO V5
 
-Este paquete sí contiene los archivos visuales actualizados.
+Esta versión usa el logo definitivo proporcionado por el propietario y una paleta coordinada con su fondo azul y su insignia dorada VIP.
 
-Archivos imprescindibles que deben aparecer al descomprimir:
-
+ARCHIVOS PRINCIPALES
 - index.html
+- logo-telegvip.webp
 - favicon.ico
 - favicon-16x16.png
 - favicon-32x32.png
@@ -12,16 +12,21 @@ Archivos imprescindibles que deben aparecer al descomprimir:
 - favicon-512x512.png
 - apple-touch-icon.png
 - site.webmanifest
-- logo-telegvip-icon.webp
-- logo-telegvip-icon.png
-- icono-telegvip.webp
+- firebase.json
+- .firebaserc
+- .nojekyll
+- firestore.rules
+- storage.rules
+- database.rules.json
+- README.md
+- FIREBASE-PASOS.md
+- ARCHIVOS-A-ELIMINAR.md
 
-Para publicarlo en GitHub:
+IMPORTANTE
+1. Descomprime el ZIP.
+2. Sube el contenido de la carpeta, no el ZIP, a la raíz de GitHub.
+3. Reemplaza index.html, el manifest y todos los favicons.
+4. Elimina del repositorio los logos antiguos indicados en ARCHIVOS-A-ELIMINAR.md.
+5. Recarga la página con Ctrl + F5.
 
-1. Selecciona todo el contenido de la carpeta descomprimida.
-2. En GitHub usa Add file > Upload files.
-3. Sube los archivos y confirma el reemplazo de index.html.
-4. Pulsa Commit changes.
-5. Abre el sitio con Ctrl + F5.
-
-El favicon también está incrustado dentro de index.html como respaldo.
+El favicon y todos los logos visibles se generan a partir del mismo archivo `logo-telegvip.webp`.

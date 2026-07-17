@@ -10,8 +10,8 @@ Proyecto web listo para publicar y conectado al proyecto Firebase `diamantes-pro
 - Cloud Storage para portadas, videos, capturas de testimonios y comprobantes.
 - Reglas listas para Firestore, Storage y Realtime Database.
 - Configuración opcional para Firebase Hosting.
-- Identidad visual azul marino, azul eléctrico y dorado basada en el logo oficial.
-- Favicon oficial TELEGVIP preparado para navegadores y móviles, con respaldo incrustado en `index.html` para evitar que aparezca el ícono genérico.
+- Identidad visual azul Telegram, azul profundo y dorado basada en el logo TELEGVIP definitivo.
+- Favicon oficial TELEGVIP preparado para navegadores y móviles, generado directamente desde el mismo logo definitivo.
 - Header normal que desaparece al desplazarse por la página.
 - Editor administrativo organizado por secciones desplegables.
 - Filtro general “Todos” editable y opcional desde Categorías.
@@ -103,10 +103,8 @@ La carga de fotos, videos y comprobantes necesita que Cloud Storage esté habili
 | Archivo | Función |
 | --- | --- |
 | `index.html` | Página pública, checkout y panel administrador |
-| `favicon.ico` y `favicon-*.png` | Ícono TELEGVIP del navegador y marca visual del sitio |
-| `logo-telegvip-icon.webp` | Versión ligera y recortada del logo para header, panel, login y footer |
-| `icono-telegvip.webp` | Copia exacta del ícono oficial proporcionado |
-| `logo-telegvip-original.webp` | Copia completa de respaldo del logo oficial |
+| `logo-telegvip.webp` | Logo único y optimizado utilizado en header, panel, login y footer |
+| `favicon.ico` y `favicon-*.png` | Favicons generados desde el mismo logo TELEGVIP |
 | `apple-touch-icon.png` | Ícono para accesos directos en iPhone y iPad |
 | `site.webmanifest` | Identidad del sitio cuando se instala como acceso directo |
 | `firestore.rules` | Seguridad de Cloud Firestore |
@@ -114,4 +112,5 @@ La carga de fotos, videos y comprobantes necesita que Cloud Storage esté habili
 | `database.rules.json` | Bloqueo de Realtime Database, que este sitio no utiliza |
 | `firebase.json` | Configuración de despliegue y Firebase Hosting |
 | `.firebaserc` | Proyecto Firebase predeterminado |
+| `ARCHIVOS-A-ELIMINAR.md` | Lista exacta de recursos antiguos que puedes borrar de GitHub |
 | `FIREBASE-PASOS.md` | Guía detallada de configuración |
