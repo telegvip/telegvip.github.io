@@ -1,19 +1,11 @@
 {
-  "name": "Panel de Acceso VIP para Telegram",
-  "short_name": "Acceso VIP",
+  "name": "TELEGVIP | Accesos privados por Telegram",
+  "short_name": "TELEGVIP",
   "icons": [
-    {
-      "src": "favicon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "favicon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    {"src": "favicon-192x192.png?v=15", "sizes": "192x192", "type": "image/png"},
+    {"src": "favicon-512x512.png?v=15", "sizes": "512x512", "type": "image/png"}
   ],
-  "theme_color": "#031533",
-  "background_color": "#ffffff",
+  "theme_color": "#2AABEE",
+  "background_color": "#F5F7FC",
   "display": "standalone"
 }

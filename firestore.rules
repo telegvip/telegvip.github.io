@@ -11,29 +11,15 @@ service cloud.firestore {
         && request.auth.uid == 'nMOQ6jgrGWQGK6NFBroiZIT8gKH2';
     }
 
-    function validOrder() {
+    function validNewOrder() {
       return signedIn()
-        && request.resource.data.keys().hasAll([
-          'orderCode', 'ownerUid', 'buyerName', 'buyerEmail',
-          'buyerWhatsApp', 'buyerTelegram',
-          'profileId', 'profileTitle', 'profileCover',
-          'price', 'currency', 'durationDays',
-          'paymentMethod', 'paymentAsset', 'paymentNetwork', 'paymentAddress',
-          'proofUrl', 'proofPath', 'status', 'accessLink', 'adminNote',
-          'createdAt', 'updatedAt', 'source'
-        ])
-        && request.resource.data.keys().hasOnly([
-          'orderCode', 'ownerUid', 'buyerName', 'buyerEmail',
-          'buyerWhatsApp', 'buyerTelegram',
-          'profileId', 'profileTitle', 'profileCover',
-          'price', 'currency', 'durationDays',
-          'paymentMethod', 'paymentAsset', 'paymentNetwork', 'paymentAddress',
-          'proofUrl', 'proofPath', 'status', 'accessLink', 'adminNote',
-          'createdAt', 'updatedAt', 'source'
-        ])
         && request.resource.data.ownerUid == request.auth.uid
-        && request.resource.data.orderCode is string
-        && request.resource.data.orderCode.size() <= 30
+        && request.resource.data.status == 'pending'
+        && request.resource.data.accessLink == ''
+        && request.resource.data.adminNote == ''
+        && request.resource.data.currency == 'USD'
+        && request.resource.data.durationDays == 30
+        && request.resource.data.paymentMethod in ['Tarjeta', 'USDT', 'USDC', 'Binance Pay']
         && request.resource.data.buyerName is string
         && request.resource.data.buyerName.size() >= 2
         && request.resource.data.buyerName.size() <= 120
@@ -45,63 +31,43 @@ service cloud.firestore {
         && request.resource.data.buyerTelegram is string
         && request.resource.data.buyerTelegram.size() <= 80
         && request.resource.data.profileId is string
-        && request.resource.data.profileId.size() <= 100
         && request.resource.data.profileTitle is string
-        && request.resource.data.profileTitle.size() <= 160
-        && request.resource.data.profileCover is string
-        && request.resource.data.profileCover.size() <= 2048
         && request.resource.data.price is number
         && request.resource.data.price >= 0
         && request.resource.data.price <= 10000
-        && request.resource.data.currency == 'USD'
-        && request.resource.data.durationDays == 30
-        && request.resource.data.paymentMethod in ['Tarjeta', 'USDT', 'USDC', 'Binance Pay']
-        && request.resource.data.paymentAsset is string
-        && request.resource.data.paymentAsset.size() <= 20
-        && request.resource.data.paymentNetwork is string
-        && request.resource.data.paymentNetwork.size() <= 100
-        && request.resource.data.paymentAddress is string
-        && request.resource.data.paymentAddress.size() <= 300
         && request.resource.data.proofUrl is string
-        && request.resource.data.proofUrl.size() <= 2048
         && request.resource.data.proofPath is string
-        && request.resource.data.proofPath.size() <= 1024
         && request.resource.data.proofPath.matches('telegram-vip/proofs/' + request.auth.uid + '/.*')
-        && request.resource.data.status == 'pending'
-        && request.resource.data.accessLink == ''
-        && request.resource.data.adminNote == ''
-        && request.resource.data.createdAt is timestamp
-        && request.resource.data.updatedAt is timestamp
         && request.resource.data.source == 'web';
     }
 
     match /telegramVip_site/{documentId} {
       allow read: if true;
-      allow create, update, delete: if isAdmin();
+      allow write: if isAdmin();
     }
 
     match /telegramVip_profiles/{profileId} {
       allow read: if true;
-      allow create, update, delete: if isAdmin();
+      allow write: if isAdmin();
     }
 
     match /telegramVip_categories/{categoryId} {
       allow read: if true;
-      allow create, update, delete: if isAdmin();
+      allow write: if isAdmin();
     }
 
     match /telegramVip_testimonials/{testimonialId} {
       allow read: if true;
-      allow create, update, delete: if isAdmin();
+      allow write: if isAdmin();
     }
 
     match /telegramVip_activity/{activityId} {
       allow read: if true;
-      allow create, update, delete: if isAdmin();
+      allow write: if isAdmin();
     }
 
     match /telegramVip_orders/{orderId} {
-      allow create: if validOrder();
+      allow create: if validNewOrder();
       allow read: if isAdmin()
         || (signedIn() && resource.data.ownerUid == request.auth.uid);
       allow update, delete: if isAdmin();
