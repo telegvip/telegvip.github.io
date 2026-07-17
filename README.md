@@ -1,3 +1,7 @@
+# Actualización V11
+
+Consulta `CAMBIOS-V11.md` para la sección de capturas reales, Grupo VIP y corrección del panel lateral.
+
 # TELEGVIP V10
 
 Versión con perfil compacto, publicaciones profesionales y editor administrativo con scroll completo.
