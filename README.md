@@ -1,3 +1,5 @@
+## TELEGVIP — Versión moderna V6
+
 # Panel de Acceso VIP para Telegram
 
 Proyecto web listo para publicar y conectado al proyecto Firebase `diamantes-pro-players-pro`.
