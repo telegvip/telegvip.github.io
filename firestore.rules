@@ -66,6 +66,24 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+
+    match /telegramVip_counters/{counterId} {
+      allow read: if true;
+      allow create: if isAdmin()
+        || (signedIn()
+          && counterId == 'profileSessions'
+          && request.resource.data.keys().hasOnly(['lastNumber', 'lastSessionUid', 'updatedAt'])
+          && request.resource.data.lastNumber == 4208
+          && request.resource.data.lastSessionUid == request.auth.uid);
+      allow update: if isAdmin()
+        || (signedIn()
+          && counterId == 'profileSessions'
+          && request.resource.data.keys().hasOnly(['lastNumber', 'lastSessionUid', 'updatedAt'])
+          && request.resource.data.lastNumber == resource.data.lastNumber + 1
+          && request.resource.data.lastSessionUid == request.auth.uid);
+      allow delete: if isAdmin();
+    }
+
     match /telegramVip_orders/{orderId} {
       allow create: if validNewOrder();
       allow read: if isAdmin()
