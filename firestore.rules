@@ -11,40 +11,102 @@ service cloud.firestore {
         && request.auth.uid == 'nMOQ6jgrGWQGK6NFBroiZIT8gKH2';
     }
 
-    function validNewOrder() {
+    function validBuyerFields(data) {
+      return data.buyerName is string
+        && data.buyerName.size() >= 2
+        && data.buyerName.size() <= 120
+        && data.buyerEmail is string
+        && data.buyerEmail.size() >= 5
+        && data.buyerEmail.size() <= 254
+        && data.buyerWhatsApp is string
+        && data.buyerWhatsApp.size() <= 40
+        && data.buyerTelegram is string
+        && data.buyerTelegram.size() <= 80;
+    }
+
+    function validOrderBase(data) {
       return signedIn()
-        && request.resource.data.ownerUid == request.auth.uid
+        && data.ownerUid == request.auth.uid
+        && data.accessLink == ''
+        && data.adminNote == ''
+        && data.currency == 'USD'
+        && data.durationDays == 30
+        && validBuyerFields(data)
+        && data.profileId is string
+        && data.profileTitle is string
+        && data.price is number
+        && data.price >= 0
+        && data.price <= 10000
+        && data.orderNumber is int
+        && data.orderNumber >= 8300
+        && data.orderCode is string
+        && data.orderCode.matches('VIP-[0-9]+')
+        && data.source == 'web';
+    }
+
+    function validNewOrder() {
+      let data = request.resource.data;
+      return validOrderBase(data)
+        && data.status in ['awaiting_payment', 'pending']
+        && data.paymentMethod in ['Pendiente', 'Tarjeta', 'USDT', 'USDC', 'Binance Pay']
+        && data.paymentAsset is string
+        && data.paymentNetwork is string
+        && data.paymentAddress is string
+        && data.proofUrl is string
+        && data.proofPath is string
+        && (
+          (data.status == 'awaiting_payment'
+            && data.paymentMethod == 'Pendiente'
+            && data.proofUrl == ''
+            && data.proofPath == '')
+          ||
+          (data.status == 'pending'
+            && data.paymentMethod in ['Tarjeta', 'USDT', 'USDC', 'Binance Pay']
+            && data.proofUrl.size() > 0
+            && data.proofPath.matches('telegram-vip/proofs/' + request.auth.uid + '/.*'))
+        )
+        && getAfter(/databases/$(database)/documents/telegramVip_counters/orders).data.lastNumber == data.orderNumber
+        && getAfter(/databases/$(database)/documents/telegramVip_counters/orders).data.lastOrderUid == request.auth.uid;
+    }
+
+    function validPendingBuyerUpdate() {
+      return signedIn()
+        && resource.data.ownerUid == request.auth.uid
+        && resource.data.status == 'awaiting_payment'
+        && request.resource.data.status == 'awaiting_payment'
+        && validBuyerFields(request.resource.data)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'buyerName',
+          'buyerEmail',
+          'buyerWhatsApp',
+          'buyerTelegram',
+          'updatedAt'
+        ]);
+    }
+
+    function validProofSubmission() {
+      return signedIn()
+        && resource.data.ownerUid == request.auth.uid
+        && resource.data.status == 'awaiting_payment'
         && request.resource.data.status == 'pending'
-        && request.resource.data.accessLink == ''
-        && request.resource.data.adminNote == ''
-        && request.resource.data.currency == 'USD'
-        && request.resource.data.durationDays == 30
         && request.resource.data.paymentMethod in ['Tarjeta', 'USDT', 'USDC', 'Binance Pay']
-        && request.resource.data.buyerName is string
-        && request.resource.data.buyerName.size() >= 2
-        && request.resource.data.buyerName.size() <= 120
-        && request.resource.data.buyerEmail is string
-        && request.resource.data.buyerEmail.size() >= 5
-        && request.resource.data.buyerEmail.size() <= 254
-        && request.resource.data.buyerWhatsApp is string
-        && request.resource.data.buyerWhatsApp.size() <= 40
-        && request.resource.data.buyerTelegram is string
-        && request.resource.data.buyerTelegram.size() <= 80
-        && request.resource.data.profileId is string
-        && request.resource.data.profileTitle is string
-        && request.resource.data.price is number
-        && request.resource.data.price >= 0
-        && request.resource.data.price <= 10000
+        && request.resource.data.paymentAsset is string
+        && request.resource.data.paymentNetwork is string
+        && request.resource.data.paymentAddress is string
         && request.resource.data.proofUrl is string
+        && request.resource.data.proofUrl.size() > 0
         && request.resource.data.proofPath is string
         && request.resource.data.proofPath.matches('telegram-vip/proofs/' + request.auth.uid + '/.*')
-        && request.resource.data.orderNumber is int
-        && request.resource.data.orderNumber >= 8300
-        && request.resource.data.orderCode is string
-        && request.resource.data.orderCode.matches('VIP-[0-9]+')
-        && getAfter(/databases/$(database)/documents/telegramVip_counters/orders).data.lastNumber == request.resource.data.orderNumber
-        && getAfter(/databases/$(database)/documents/telegramVip_counters/orders).data.lastOrderUid == request.auth.uid
-        && request.resource.data.source == 'web';
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'paymentMethod',
+          'paymentAsset',
+          'paymentNetwork',
+          'paymentAddress',
+          'proofUrl',
+          'proofPath',
+          'status',
+          'updatedAt'
+        ]);
     }
 
     match /telegramVip_site/{documentId} {
@@ -71,7 +133,6 @@ service cloud.firestore {
       allow read: if true;
       allow write: if isAdmin();
     }
-
 
     match /telegramVip_counters/{counterId} {
       allow read: if true;
@@ -108,7 +169,10 @@ service cloud.firestore {
       allow create: if validNewOrder();
       allow read: if isAdmin()
         || (signedIn() && resource.data.ownerUid == request.auth.uid);
-      allow update, delete: if isAdmin();
+      allow update: if isAdmin()
+        || validPendingBuyerUpdate()
+        || validProofSubmission();
+      allow delete: if isAdmin();
     }
 
     match /telegramVip_reactions/{profileId}/posts/{postId}/telegramVip_post_reactions/{userId} {
