@@ -896,6 +896,99 @@
     #publicApp .mobile-channel-actions .btn{font-size:10px}
     #publicApp .mobile-channel-stat small{font-size:6.5px}
   }
+
+
+  /* TELEGVIP V38 · Tipografía y controles móviles más legibles */
+  @media(max-width:700px){
+    /* Marca compacta y legible en el encabezado móvil */
+    #publicApp #siteHeader .brand{gap:12px}
+    #publicApp #siteHeader .brand-logo{width:48px;height:48px;flex:0 0 48px}
+    #publicApp #siteHeader .brand .js-brand-title{font-size:0;line-height:1}
+    #publicApp #siteHeader .brand .js-brand-title::after{content:"TLVIP";font-size:18px;line-height:1.1;font-weight:900;letter-spacing:-.02em;color:#11182e}
+    #publicApp #siteHeader .brand .js-brand-subtitle{display:none}
+
+    /* Textos principales del perfil */
+    #publicApp .mobile-channel-back{font-size:13px;min-height:40px}
+    #publicApp .mobile-channel-badges span{font-size:10px;min-height:28px;padding-inline:10px}
+    #publicApp .mobile-channel-title h1{font-size:28px}
+    #publicApp .mobile-channel-title p{font-size:12px;line-height:1.35;margin-top:5px}
+    #publicApp .mobile-channel-copy{font-size:14px;line-height:1.5;margin:13px 0 12px;-webkit-line-clamp:3}
+
+    /* Estadísticas en una sola composición horizontal: icono + textos */
+    #publicApp .mobile-channel-stats{gap:8px;margin-bottom:12px}
+    #publicApp .mobile-channel-stat{
+      min-height:66px;padding:10px 8px;
+      display:grid;grid-template-columns:30px minmax(0,1fr);grid-template-rows:auto auto;
+      column-gap:7px;align-content:center;align-items:center;text-align:left
+    }
+    #publicApp .mobile-channel-stat-icon{
+      grid-column:1;grid-row:1/3;width:30px;height:30px;margin:0;border-radius:9px
+    }
+    #publicApp .mobile-channel-stat-icon .icon{width:17px;height:17px}
+    #publicApp .mobile-channel-stat strong{
+      grid-column:2;grid-row:1;display:block;font-size:14px;line-height:1.12;margin:0
+    }
+    #publicApp .mobile-channel-stat small{
+      grid-column:2;grid-row:2;display:block;margin:3px 0 0;font-size:10px;line-height:1.15
+    }
+
+    /* Precio, llamada a la acción y métodos de pago */
+    #publicApp .mobile-channel-actions{grid-template-columns:104px minmax(0,1fr);gap:10px}
+    #publicApp .mobile-channel-price{padding:10px 11px}
+    #publicApp .mobile-channel-price s{font-size:11px}
+    #publicApp .mobile-channel-price b{font-size:25px}
+    #publicApp .mobile-channel-price small{font-size:10px;line-height:1.25;margin-top:5px}
+    #publicApp .mobile-channel-actions .btn{min-height:54px;font-size:14px;padding-inline:12px}
+    #publicApp .mobile-channel-payments{gap:10px;margin-top:11px;padding-top:11px;font-size:10px;letter-spacing:.03em}
+    #publicApp .mobile-channel-payments img{width:min(205px,58vw);max-width:none}
+
+    /* Encabezado de contenido reciente */
+    #publicApp .mobile-channel-content-title{align-items:center;margin:16px 13px 10px}
+    #publicApp .mobile-channel-content-title h2{font-size:25px;line-height:1.08}
+    #publicApp .mobile-channel-content-title p{font-size:11.5px;line-height:1.35;margin-top:4px}
+    #publicApp .mobile-channel-content-title span{padding:7px 10px;font-size:10.5px}
+
+    /* Filtros ocupando todo el ancho disponible */
+    #publicApp .detail-content-shell{padding-inline:11px}
+    #publicApp .detail-feed-head{margin-bottom:10px}
+    #publicApp .detail-filter-bar{
+      width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:6px;padding:5px;overflow:visible;background:#edf2f8;border:1px solid #e2e8f1;border-radius:14px
+    }
+    #publicApp .detail-filter-btn{
+      width:100%;min-width:0;min-height:42px;padding:0 5px;border-radius:10px;
+      font-size:11.5px;line-height:1.15;text-align:center
+    }
+    #publicApp .detail-filter-btn b{font-size:11.5px}
+
+    /* Publicaciones: evita textos secundarios diminutos */
+    #publicApp .post-author strong{font-size:14px}
+    #publicApp .post-author small{font-size:12px}
+    #publicApp .post-channel-badge,#publicApp .post-type-badge{font-size:11px}
+    #publicApp .post-caption{font-size:14px;line-height:1.55}
+    #publicApp .post-meta{font-size:11.5px}
+    #publicApp .reaction-chip{font-size:12px}
+    #publicApp .post-vip-cta{font-size:12px}
+
+    /* Barra fija de compra */
+    #publicApp .mobile-channel-sticky{grid-template-columns:96px minmax(0,1fr);padding:9px;gap:10px}
+    #publicApp .mobile-channel-sticky small{font-size:10px}
+    #publicApp .mobile-channel-sticky strong{font-size:23px}
+    #publicApp .mobile-channel-sticky .btn{min-height:50px;font-size:13px}
+  }
+  @media(max-width:370px){
+    #publicApp .mobile-channel-title h1{font-size:25px}
+    #publicApp .mobile-channel-copy{font-size:13px}
+    #publicApp .mobile-channel-stat{grid-template-columns:27px minmax(0,1fr);column-gap:5px;padding-inline:6px}
+    #publicApp .mobile-channel-stat-icon{width:27px;height:27px}
+    #publicApp .mobile-channel-stat strong{font-size:12.5px}
+    #publicApp .mobile-channel-stat small{font-size:9px}
+    #publicApp .mobile-channel-actions{grid-template-columns:96px minmax(0,1fr)}
+    #publicApp .mobile-channel-actions .btn{font-size:12.5px}
+    #publicApp .mobile-channel-payments img{width:min(185px,56vw)}
+    #publicApp .detail-filter-btn,#publicApp .detail-filter-btn b{font-size:10.5px}
+  }
+
   .checkout-footer-actions{display:grid;grid-template-columns:minmax(112px,.42fr) minmax(0,1fr);gap:9px;width:100%}
   .checkout-footer-actions.single{grid-template-columns:1fr}
   @media(max-width:420px){.checkout-footer-actions{grid-template-columns:104px minmax(0,1fr)}.checkout-footer-actions .btn{padding-inline:8px;font-size:11px}}
