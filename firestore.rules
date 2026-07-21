@@ -38,6 +38,12 @@ service cloud.firestore {
         && request.resource.data.proofUrl is string
         && request.resource.data.proofPath is string
         && request.resource.data.proofPath.matches('telegram-vip/proofs/' + request.auth.uid + '/.*')
+        && request.resource.data.orderNumber is int
+        && request.resource.data.orderNumber >= 8300
+        && request.resource.data.orderCode is string
+        && request.resource.data.orderCode.matches('VIP-[0-9]+')
+        && getAfter(/databases/$(database)/documents/telegramVip_counters/orders).data.lastNumber == request.resource.data.orderNumber
+        && getAfter(/databases/$(database)/documents/telegramVip_counters/orders).data.lastOrderUid == request.auth.uid
         && request.resource.data.source == 'web';
     }
 
@@ -71,16 +77,30 @@ service cloud.firestore {
       allow read: if true;
       allow create: if isAdmin()
         || (signedIn()
-          && counterId == 'profileSessions'
-          && request.resource.data.keys().hasOnly(['lastNumber', 'lastSessionUid', 'updatedAt'])
-          && request.resource.data.lastNumber == 4208
-          && request.resource.data.lastSessionUid == request.auth.uid);
+          && (
+            (counterId == 'profileSessions'
+              && request.resource.data.keys().hasOnly(['lastNumber', 'lastSessionUid', 'updatedAt'])
+              && request.resource.data.lastNumber == 4208
+              && request.resource.data.lastSessionUid == request.auth.uid)
+            ||
+            (counterId == 'orders'
+              && request.resource.data.keys().hasOnly(['lastNumber', 'lastOrderUid', 'updatedAt'])
+              && request.resource.data.lastNumber == 8300
+              && request.resource.data.lastOrderUid == request.auth.uid)
+          ));
       allow update: if isAdmin()
         || (signedIn()
-          && counterId == 'profileSessions'
-          && request.resource.data.keys().hasOnly(['lastNumber', 'lastSessionUid', 'updatedAt'])
-          && request.resource.data.lastNumber == resource.data.lastNumber + 1
-          && request.resource.data.lastSessionUid == request.auth.uid);
+          && (
+            (counterId == 'profileSessions'
+              && request.resource.data.keys().hasOnly(['lastNumber', 'lastSessionUid', 'updatedAt'])
+              && request.resource.data.lastNumber == resource.data.lastNumber + 1
+              && request.resource.data.lastSessionUid == request.auth.uid)
+            ||
+            (counterId == 'orders'
+              && request.resource.data.keys().hasOnly(['lastNumber', 'lastOrderUid', 'updatedAt'])
+              && request.resource.data.lastNumber == resource.data.lastNumber + 1
+              && request.resource.data.lastOrderUid == request.auth.uid)
+          ));
       allow delete: if isAdmin();
     }
 
