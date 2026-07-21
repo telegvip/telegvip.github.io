@@ -184,6 +184,89 @@ service cloud.firestore {
       allow delete: if signedIn() && request.auth.uid == userId;
     }
 
+
+
+    // V41 · Estadísticas anónimas de TELEGVIP
+    function validAnalyticsEvent(data) {
+      return signedIn()
+        && data.ownerUid == request.auth.uid
+        && data.keys().hasOnly([
+          'ownerUid',
+          'sessionId',
+          'eventType',
+          'page',
+          'profileId',
+          'profileTitle',
+          'device',
+          'referrerHost',
+          'isReturning',
+          'value',
+          'createdAt'
+        ])
+        && data.sessionId is string
+        && data.sessionId.size() >= 6
+        && data.sessionId.size() <= 140
+        && data.eventType in [
+          'session_start',
+          'page_view',
+          'profile_view',
+          'checkout_open',
+          'checkout_continue',
+          'payment_select',
+          'proof_submitted'
+        ]
+        && data.page is string
+        && data.page.size() <= 180
+        && data.profileId is string
+        && data.profileId.size() <= 100
+        && data.profileTitle is string
+        && data.profileTitle.size() <= 120
+        && data.device in ['mobile', 'tablet', 'desktop']
+        && data.referrerHost is string
+        && data.referrerHost.size() <= 120
+        && data.isReturning is bool
+        && data.value is string
+        && data.value.size() <= 80
+        && data.createdAt == request.time;
+    }
+
+    function validAnalyticsPresence(data, visitorId) {
+      return signedIn()
+        && visitorId == request.auth.uid
+        && data.ownerUid == request.auth.uid
+        && data.keys().hasOnly([
+          'ownerUid',
+          'sessionId',
+          'page',
+          'profileId',
+          'profileTitle',
+          'device',
+          'lastSeen'
+        ])
+        && data.sessionId is string
+        && data.sessionId.size() >= 6
+        && data.sessionId.size() <= 140
+        && data.page is string
+        && data.page.size() <= 180
+        && data.profileId is string
+        && data.profileId.size() <= 100
+        && data.profileTitle is string
+        && data.profileTitle.size() <= 120
+        && data.device in ['mobile', 'tablet', 'desktop']
+        && data.lastSeen == request.time;
+    }
+
+    match /telegramVip_analytics_events/{eventId} {
+      allow create: if isAdmin() || validAnalyticsEvent(request.resource.data);
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /telegramVip_analytics_presence/{visitorId} {
+      allow create, update: if isAdmin()
+        || validAnalyticsPresence(request.resource.data, visitorId);
+      allow read, delete: if isAdmin();
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }
