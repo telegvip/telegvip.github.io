@@ -1,0 +1,127 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && request.auth.uid == 'nMOQ6jgrGWQGK6NFBroiZIT8gKH2';
+    }
+
+    function validNewOrder() {
+      return signedIn()
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.status == 'pending'
+        && request.resource.data.accessLink == ''
+        && request.resource.data.adminNote == ''
+        && request.resource.data.currency == 'USD'
+        && request.resource.data.durationDays == 30
+        && request.resource.data.paymentMethod in ['Tarjeta', 'USDT', 'USDC', 'Binance Pay']
+        && request.resource.data.buyerName is string
+        && request.resource.data.buyerName.size() >= 2
+        && request.resource.data.buyerName.size() <= 120
+        && request.resource.data.buyerEmail is string
+        && request.resource.data.buyerEmail.size() >= 5
+        && request.resource.data.buyerEmail.size() <= 254
+        && request.resource.data.buyerWhatsApp is string
+        && request.resource.data.buyerWhatsApp.size() <= 40
+        && request.resource.data.buyerTelegram is string
+        && request.resource.data.buyerTelegram.size() <= 80
+        && request.resource.data.profileId is string
+        && request.resource.data.profileTitle is string
+        && request.resource.data.price is number
+        && request.resource.data.price >= 0
+        && request.resource.data.price <= 10000
+        && request.resource.data.proofUrl is string
+        && request.resource.data.proofPath is string
+        && request.resource.data.proofPath.matches('telegram-vip/proofs/' + request.auth.uid + '/.*')
+        && request.resource.data.orderNumber is int
+        && request.resource.data.orderNumber >= 8300
+        && request.resource.data.orderCode is string
+        && request.resource.data.orderCode.matches('VIP-[0-9]+')
+        && getAfter(/databases/$(database)/documents/telegramVip_counters/orders).data.lastNumber == request.resource.data.orderNumber
+        && getAfter(/databases/$(database)/documents/telegramVip_counters/orders).data.lastOrderUid == request.auth.uid
+        && request.resource.data.source == 'web';
+    }
+
+    match /telegramVip_site/{documentId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /telegramVip_profiles/{profileId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /telegramVip_categories/{categoryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /telegramVip_testimonials/{testimonialId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /telegramVip_activity/{activityId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+
+    match /telegramVip_counters/{counterId} {
+      allow read: if true;
+      allow create: if isAdmin()
+        || (signedIn()
+          && (
+            (counterId == 'profileSessions'
+              && request.resource.data.keys().hasOnly(['lastNumber', 'lastSessionUid', 'updatedAt'])
+              && request.resource.data.lastNumber == 4208
+              && request.resource.data.lastSessionUid == request.auth.uid)
+            ||
+            (counterId == 'orders'
+              && request.resource.data.keys().hasOnly(['lastNumber', 'lastOrderUid', 'updatedAt'])
+              && request.resource.data.lastNumber == 8300
+              && request.resource.data.lastOrderUid == request.auth.uid)
+          ));
+      allow update: if isAdmin()
+        || (signedIn()
+          && (
+            (counterId == 'profileSessions'
+              && request.resource.data.keys().hasOnly(['lastNumber', 'lastSessionUid', 'updatedAt'])
+              && request.resource.data.lastNumber == resource.data.lastNumber + 1
+              && request.resource.data.lastSessionUid == request.auth.uid)
+            ||
+            (counterId == 'orders'
+              && request.resource.data.keys().hasOnly(['lastNumber', 'lastOrderUid', 'updatedAt'])
+              && request.resource.data.lastNumber == resource.data.lastNumber + 1
+              && request.resource.data.lastOrderUid == request.auth.uid)
+          ));
+      allow delete: if isAdmin();
+    }
+
+    match /telegramVip_orders/{orderId} {
+      allow create: if validNewOrder();
+      allow read: if isAdmin()
+        || (signedIn() && resource.data.ownerUid == request.auth.uid);
+      allow update, delete: if isAdmin();
+    }
+
+    match /telegramVip_reactions/{profileId}/posts/{postId}/telegramVip_post_reactions/{userId} {
+      allow read: if true;
+      allow create, update: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.keys().hasOnly(['emoji', 'updatedAt'])
+        && request.resource.data.emoji in ['❤️','🔥','😍','🥵','😈','💋'];
+      allow delete: if signedIn() && request.auth.uid == userId;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
