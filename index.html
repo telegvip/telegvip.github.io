@@ -904,7 +904,7 @@
     #publicApp #siteHeader .brand{gap:12px}
     #publicApp #siteHeader .brand-logo{width:48px;height:48px;flex:0 0 48px}
     #publicApp #siteHeader .brand .js-brand-title{font-size:0;line-height:1}
-    #publicApp #siteHeader .brand .js-brand-title::after{content:"TLVIP";font-size:18px;line-height:1.1;font-weight:900;letter-spacing:-.02em;color:#11182e}
+    #publicApp #siteHeader .brand .js-brand-title::after{content:"TELEGVIP";font-size:17px;line-height:1.1;font-weight:900;letter-spacing:-.025em;color:#11182e}
     #publicApp #siteHeader .brand .js-brand-subtitle{display:none}
 
     /* Textos principales del perfil */
@@ -933,14 +933,26 @@
     }
 
     /* Precio, llamada a la acción y métodos de pago */
-    #publicApp .mobile-channel-actions{grid-template-columns:104px minmax(0,1fr);gap:10px}
-    #publicApp .mobile-channel-price{padding:10px 11px}
-    #publicApp .mobile-channel-price s{font-size:11px}
-    #publicApp .mobile-channel-price b{font-size:25px}
-    #publicApp .mobile-channel-price small{font-size:10px;line-height:1.25;margin-top:5px}
-    #publicApp .mobile-channel-actions .btn{min-height:54px;font-size:14px;padding-inline:12px}
+    #publicApp .mobile-channel-actions{grid-template-columns:118px minmax(0,1fr);gap:9px;align-items:stretch}
+    #publicApp .mobile-channel-price{min-height:48px;padding:8px 10px;border-radius:14px;background:linear-gradient(145deg,#f7f9ff,#eeeaff);border:1px solid #dde4fb;box-shadow:0 6px 16px rgba(79,78,180,.08)}
+    #publicApp .mobile-channel-price s{font-size:10px;line-height:1;color:#929bb0}
+    #publicApp .mobile-channel-price b{font-size:24px;line-height:1;color:#111a33;letter-spacing:-.03em}
+    #publicApp .mobile-channel-price small{font-size:9.5px;line-height:1.2;margin-top:4px;color:#6f7d95}
+    #publicApp .mobile-channel-actions .btn{min-height:48px;height:48px;font-size:13px;padding-inline:12px;border-radius:14px;gap:8px;box-shadow:0 9px 20px rgba(79,86,224,.2)}
+    #publicApp .mobile-channel-price span{display:flex;align-items:baseline;gap:6px;white-space:nowrap}
+    #publicApp .mobile-channel-actions .mobile-cta-icon,
+    #publicApp .mobile-channel-sticky .mobile-cta-icon{
+      width:25px;height:25px;flex:0 0 25px;border-radius:8px;
+      display:grid;place-items:center;background:rgba(255,255,255,.18);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.20)
+    }
+    #publicApp .mobile-channel-actions .mobile-cta-icon .icon,
+    #publicApp .mobile-channel-sticky .mobile-cta-icon .icon{width:15px;height:15px;stroke-width:2.15}
+    #publicApp .mobile-channel-actions .btn>span:last-child,
+    #publicApp .mobile-channel-sticky .btn>span:last-child{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
     #publicApp .mobile-channel-payments{gap:10px;margin-top:11px;padding-top:11px;font-size:10px;letter-spacing:.03em}
-    #publicApp .mobile-channel-payments img{width:min(205px,58vw);max-width:none}
+    #publicApp .mobile-channel-payments img{width:min(164px,46vw);max-width:none}
 
     /* Encabezado de contenido reciente */
     #publicApp .mobile-channel-content-title{align-items:center;margin:16px 13px 10px}
@@ -971,10 +983,14 @@
     #publicApp .post-vip-cta{font-size:12px}
 
     /* Barra fija de compra */
-    #publicApp .mobile-channel-sticky{grid-template-columns:96px minmax(0,1fr);padding:9px;gap:10px}
+    #publicApp .mobile-channel-sticky{grid-template-columns:108px minmax(0,1fr);padding:8px 9px;gap:9px}
     #publicApp .mobile-channel-sticky small{font-size:10px}
     #publicApp .mobile-channel-sticky strong{font-size:23px}
-    #publicApp .mobile-channel-sticky .btn{min-height:50px;font-size:13px}
+    #publicApp .mobile-channel-sticky-copy{padding-left:4px}
+    #publicApp .mobile-channel-sticky-copy small{display:block;margin-bottom:2px;color:#74839a;font-weight:750}
+    #publicApp .mobile-channel-sticky-copy strong{letter-spacing:-.03em;color:#111a33}
+
+    #publicApp .mobile-channel-sticky .btn{min-height:44px;height:44px;font-size:12.5px;border-radius:13px;gap:8px;padding-inline:12px}
   }
   @media(max-width:370px){
     #publicApp .mobile-channel-title h1{font-size:25px}
@@ -983,9 +999,9 @@
     #publicApp .mobile-channel-stat-icon{width:27px;height:27px}
     #publicApp .mobile-channel-stat strong{font-size:12.5px}
     #publicApp .mobile-channel-stat small{font-size:9px}
-    #publicApp .mobile-channel-actions{grid-template-columns:96px minmax(0,1fr)}
-    #publicApp .mobile-channel-actions .btn{font-size:12.5px}
-    #publicApp .mobile-channel-payments img{width:min(185px,56vw)}
+    #publicApp .mobile-channel-actions{grid-template-columns:108px minmax(0,1fr)}
+    #publicApp .mobile-channel-actions .btn{font-size:12px;padding-inline:9px}
+    #publicApp .mobile-channel-payments img{width:min(148px,44vw)}
     #publicApp .detail-filter-btn,#publicApp .detail-filter-btn b{font-size:10.5px}
   }
 
@@ -1331,10 +1347,10 @@
     function mobileChannelProfileMarkup({photoCount,videoCount,audioCount,oldPrice,discount}){
       const saleButton=selected.saleStatus==='Agotado temporalmente'
         ? '<button class="btn btn-secondary" disabled>Acceso agotado</button>'
-        : `<button class="btn btn-primary" onclick="openCheckout(${jsAttr(selected.id)})">Acceder al VIP</button>`;
+        : `<button class="btn btn-primary mobile-primary-cta" onclick="openCheckout(${jsAttr(selected.id)})"><span class="mobile-cta-icon" data-icon="lock"></span><span>Acceder al VIP</span></button>`;
       const stickyButton=selected.saleStatus==='Agotado temporalmente'
         ? '<button class="btn btn-secondary" disabled>Agotado</button>'
-        : `<button class="btn btn-primary" onclick="openCheckout(${jsAttr(selected.id)})">Continuar con la compra</button>`;
+        : `<button class="btn btn-primary mobile-sticky-cta" onclick="openCheckout(${jsAttr(selected.id)})"><span class="mobile-cta-icon" data-icon="arrow-right"></span><span>Continuar con la compra</span></button>`;
       return `<section class="mobile-channel-profile" aria-label="Resumen del perfil VIP"><div class="mobile-channel-cover"><img src="${esc(selected.cover)}" alt="Portada de ${esc(selected.title)}"><button class="mobile-channel-back" onclick="showHome()">← Volver</button><div class="mobile-channel-badges"><span class="live">● ${esc(siteConfig.detailStatus)}</span><span class="adult">${esc(siteConfig.cardBadge)}</span></div></div><article class="mobile-channel-card"><div class="mobile-channel-title"><img class="mobile-channel-avatar" src="${esc(selected.cover)}" alt="${esc(selected.title)}"><div class="mobile-channel-title-copy"><h1>${esc(selected.title)} <span class="verified">●</span></h1><p>${esc(selected.handle)} · Grupo VIP privado</p></div></div><p class="mobile-channel-copy">${esc(selected.desc||selected.long)}</p><div class="mobile-channel-stats"><div class="mobile-channel-stat"><span class="mobile-channel-stat-icon" data-icon="image"></span><strong>${formatStatCount(selected.photos,selected.photosPlus!==false)}</strong><small>Fotos</small></div><div class="mobile-channel-stat"><span class="mobile-channel-stat-icon" data-icon="video"></span><strong>${formatStatCount(selected.videos,selected.videosPlus!==false)}</strong><small>Videos</small></div><div class="mobile-channel-stat"><span class="mobile-channel-stat-icon" data-icon="calendar"></span><strong>${esc(selected.freq)}</strong><small>Publicaciones</small></div></div><div class="mobile-channel-actions"><div class="mobile-channel-price"><span>${oldPrice>selected.price?`<s>$${oldPrice}</s>`:''}<b>$${Number(selected.price).toFixed(0)}</b></span><small>${esc(selected.duration||siteConfig.duration)}${discount?` · ${discount}% menos`:''}</small></div>${saleButton}</div><div class="mobile-channel-payments"><span>Pago seguro</span><img src="telegvip-payments-all-v33.webp?v=33" alt="Visa, Mastercard, Binance, USDT y USDC"></div></article><div class="mobile-channel-content-title"><div><h2>Contenido reciente</h2><p>Fotografías, videos y audios antes de comprar</p></div><span>${selected.posts.length} archivos</span></div><div class="mobile-channel-sticky"><div class="mobile-channel-sticky-copy"><small>Membresía</small><strong>$${Number(selected.price).toFixed(0)}</strong></div>${stickyButton}</div></section>`
     }
     function openDetail(id,updateHistory=true){
