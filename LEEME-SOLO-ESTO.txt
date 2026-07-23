@@ -1,0 +1,17 @@
+TELEGVIP - CONECTAR BOT A FIREBASE
+
+1. Copia TODO el contenido de este parche dentro de:
+   C:\Users\USER\Documents\GitHub\telegvip.github.io
+
+2. Acepta reemplazar firebase.json.
+
+3. Comprueba que exista:
+   telegvip.github.io\functions\package.json
+
+4. Ejecuta:
+   CONECTAR-BOT-A-FIREBASE-CORREGIDO.bat
+
+5. La clave se pedira solamente despues de instalar dependencias y desplegar Functions.
+   Escribe la misma clave que guardaste como TELEGRAM_WEBHOOK_SECRET.
+
+No cambies reglas de Firestore ni Storage en este paso.

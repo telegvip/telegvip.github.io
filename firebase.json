@@ -1,4 +1,16 @@
 {
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log"
+      ]
+    }
+  ],
   "firestore": {
     "rules": "firestore.rules"
   },
@@ -11,6 +23,8 @@
       "firebase.json",
       "firestore.rules",
       "storage.rules",
+      "functions/**",
+      "CONECTAR-BOT-A-FIREBASE.bat",
       "**/.*",
       "**/node_modules/**"
     ],
