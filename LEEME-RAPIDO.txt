@@ -1,0 +1,23 @@
+1. Copia TODO este contenido dentro de:
+   C:\Users\USER\Documents\GitHub\telegvip.github.io
+
+2. Ejecuta:
+   LIMPIAR-GITHUB-PAGES-V43.bat
+
+3. Abre GitHub Desktop.
+
+4. Deja TODOS los cambios marcados.
+   Es normal que aparezcan muchísimos archivos eliminados dentro de functions/node_modules.
+
+5. Usa este mensaje:
+   Corregir publicación V43
+
+6. Pulsa Commit to main y después Push origin.
+
+7. Espera unos minutos y abre:
+   https://telegvip.github.io/admin/
+
+8. Actualiza con Ctrl + F5.
+
+No vuelvas a desplegar Functions. Ya quedaron actualizadas correctamente.
+No cambies reglas de Firebase.

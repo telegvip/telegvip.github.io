@@ -1,0 +1,19 @@
+# Dependencias locales de Firebase Functions
+functions/node_modules/
+node_modules/
+
+# Archivos temporales de Firebase
+.firebase/
+functions/.firebase/
+firebase-debug.log*
+functions/firebase-debug.log*
+
+# Secretos y variables locales
+.env
+.env.*
+!.env.example
+
+# Logs y archivos del sistema
+*.log
+.DS_Store
+Thumbs.db
