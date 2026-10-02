@@ -1,0 +1,35 @@
+TELEGVIP V44 - GESTOR CENTRAL DE PUBLICIDAD
+
+QUÉ SE AGREGÓ
+- Nueva sección "Publicidad" en el panel administrador.
+- Un único lugar para pegar códigos de Adsterra.
+- Formatos: Native Banner, Banner, Social Bar, Popunder y Smartlink.
+- Interruptor global para apagar todos los anuncios sin borrar códigos.
+- Distribución automática:
+  * Inicio, debajo del bloque principal: Banner.
+  * Inicio, después del catálogo: Native Banner.
+  * Todos los perfiles, arriba del feed: Banner.
+  * Todos los perfiles, al final de la vista previa: Native Banner.
+  * Smartlink como oferta patrocinada separada.
+- Los anuncios no se cargan dentro de /admin.
+
+RECOMENDACIÓN INICIAL
+1. Native Banner: ACTIVADO.
+2. Banner: ACTIVADO.
+3. Social Bar: DESACTIVADO al principio.
+4. Popunder: DESACTIVADO.
+5. Smartlink: DESACTIVADO.
+6. Adult ads: configurarlo en Adsterra; empezar desactivado si priorizas UX.
+
+CÓMO USAR
+1. Sube esta versión a GitHub.
+2. Entra a /admin/.
+3. Abre "Publicidad".
+4. Pega el código completo que te entregue Adsterra en el formato correspondiente.
+5. Activa Publicidad global + los formatos deseados.
+6. Guarda.
+7. Firestore sincroniza la configuración y toda la web la recibe automáticamente.
+
+NO HAY QUE EDITAR PERFIL POR PERFIL.
+NO HAY QUE CAMBIAR FIRESTORE.RULES.
+NO HAY QUE CAMBIAR FUNCTIONS/INDEX.JS.
