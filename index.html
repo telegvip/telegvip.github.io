@@ -1062,6 +1062,18 @@
   text-transform:uppercase;
   text-align:center;
 }
+.telegvip-ad-direct{
+  width:100%;
+  min-height:50px;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  overflow:visible;
+}
+.telegvip-ad-direct>div,
+.telegvip-ad-direct>iframe{
+  max-width:100%;
+}
 .telegvip-ad-frame{
   width:100%;
   min-height:50px;
@@ -1225,6 +1237,75 @@
   .telegvip-ad-card{border-radius:13px;padding:8px}
 }
 </style>
+
+
+/* ============================================================
+   TELEGVIP V46 · PUBLICIDAD COMPACTA EN MÓVILES
+   ============================================================ */
+.telegvip-ad-zone[data-ad-kind="banner"]{
+  width:min(340px,calc(100% - 20px));
+}
+.telegvip-ad-zone[data-ad-kind="banner"] .telegvip-ad-card{
+  width:fit-content;
+  max-width:100%;
+  margin:0 auto;
+  padding:6px;
+  min-height:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.telegvip-ad-zone[data-ad-kind="banner"] .telegvip-ad-direct{
+  width:auto;
+  max-width:100%;
+  min-height:0;
+  display:block;
+  line-height:0;
+  overflow:hidden;
+}
+.telegvip-ad-zone[data-ad-kind="banner"] .telegvip-ad-direct iframe{
+  display:block;
+  max-width:100%;
+  margin:0 auto;
+}
+.telegvip-ad-zone[data-ad-kind="native"] .telegvip-ad-card{
+  min-height:0;
+}
+.telegvip-ad-zone[data-ad-kind="native"] .telegvip-ad-direct{
+  min-height:0;
+}
+@media(max-width:640px){
+  .telegvip-ad-zone{
+    margin:9px auto;
+  }
+  .telegvip-ad-zone.compact{
+    margin:8px auto;
+  }
+  .telegvip-ad-zone[data-ad-kind="banner"]{
+    width:min(332px,calc(100vw - 16px));
+  }
+  .telegvip-ad-zone[data-ad-kind="banner"] .telegvip-ad-card{
+    padding:4px;
+    border-radius:10px;
+    box-shadow:0 5px 16px rgba(31,66,91,.045);
+  }
+  .telegvip-ad-zone[data-ad-kind="native"]{
+    width:min(420px,calc(100vw - 16px));
+  }
+  .telegvip-ad-zone[data-ad-kind="native"] .telegvip-ad-card{
+    padding:5px;
+    border-radius:11px;
+    min-height:0;
+  }
+  .telegvip-ad-label{
+    margin-bottom:3px;
+    font-size:7px;
+    line-height:1;
+  }
+  #detailView .telegvip-ad-zone{
+    margin:8px auto 10px;
+  }
+}
 
 </head>
 <body>
@@ -1784,7 +1865,7 @@
     }
     function renderAdsManager(){
       const root=document.getElementById('adminContent');
-      root.innerHTML=`<div class="admin-title"><div><span class="eyebrow">MONETIZACIÓN CENTRAL</span><h1>Publicidad en toda la web</h1><p>Pega cada código una sola vez. TELEGVIP lo distribuye automáticamente en Inicio y en todos los perfiles.</p></div></div>
+      root.innerHTML=`<div class="admin-title"><div><span class="eyebrow">MONETIZACIÓN CENTRAL</span><h1>Publicidad en toda la web</h1><p>Pega cada código una sola vez. TELEGVIP lo coloca directamente en el HTML de la vista activa (Inicio o perfil), sin duplicar la misma unidad en una página.</p></div></div>
       <form id="adsManagerForm" onsubmit="saveAdsManager(event)">
         <div class="ads-recommend"><div class="ads-recommend-icon">✓</div><div><strong>Configuración recomendada para TELEGVIP</strong><p>Empieza con <b>Native Banner + Banner</b>. Son los formatos menos molestos para una web de perfiles. Deja Social Bar apagado al principio y Popunder/Smartlink apagados salvo que quieras probar más monetización.</p></div></div>
         <div class="ads-master"><span><strong>Publicidad global</strong><small>Apaga este interruptor y desaparecen todos los anuncios sin borrar tus códigos.</small></span><input class="ads-toggle" type="checkbox" name="adsMasterEnabled" ${adsChecked('adsMasterEnabled')}></div>
@@ -1794,7 +1875,7 @@
           ${adsFormatCard({title:'Social Bar',subtitle:'Widgets, notificaciones o elementos flotantes de Adsterra.',key:'adsSocialBarEnabled',codeKey:'adsSocialBarCode',badge:'PROBAR DESPUÉS',badgeClass:'warn',help:'Se carga una sola vez por visita. Puede ser más visible que un banner normal.'})}
           ${adsFormatCard({title:'Popunder',subtitle:'Abre publicidad en otra pestaña/ventana después de una interacción.',key:'adsPopunderEnabled',codeKey:'adsPopunderCode',badge:'MÁS INVASIVO',badgeClass:'warn',help:'Déjalo apagado si priorizas la experiencia del usuario.'})}
           <section class="ads-admin-card full"><div class="ads-admin-head"><span><strong>Smartlink</strong><small>Enlace publicitario independiente. Nunca sustituye botones de compra ni navegación.</small></span><span class="ads-format-badge off">OPCIONAL</span></div><div class="ads-admin-body"><div class="ads-master"><span><strong>Activar Smartlink</strong><small>Se muestra como una oferta patrocinada separada.</small></span><input class="ads-toggle" type="checkbox" name="adsSmartlinkEnabled" ${adsChecked('adsSmartlinkEnabled')}></div><div class="form-grid"><label class="field span2">URL Smartlink<input name="adsSmartlinkUrl" type="url" value="${esc(siteConfig.adsSmartlinkUrl||'')}" placeholder="https://..."></label><label class="field span2">Texto visible<input name="adsSmartlinkLabel" value="${esc(siteConfig.adsSmartlinkLabel||'Ver oferta patrocinada')}"></label></div></div></section>
-          <section class="ads-admin-card full"><div class="ads-admin-head"><span><strong>Lugares donde aparecerán</strong><small>Estos interruptores controlan la distribución automática. No necesitas editar ningún perfil.</small></span><span class="ads-format-badge">AUTOMÁTICO</span></div><div class="ads-admin-body"><div class="ads-placement-grid">
+          <section class="ads-admin-card full"><div class="ads-admin-head"><span><strong>Lugares donde aparecerán</strong><small>Estos interruptores controlan dónde se usará cada unidad. En cada vista activa se carga una sola instancia de cada código; no necesitas editar ningún perfil.</small></span><span class="ads-format-badge">AUTOMÁTICO</span></div><div class="ads-admin-body"><div class="ads-placement-grid">
             <label class="ads-placement"><span><strong>Inicio · debajo del encabezado principal</strong><small>Usa el Banner.</small></span><input class="ads-toggle" type="checkbox" name="adsPlaceHomeTop" ${adsChecked('adsPlaceHomeTop')}></label>
             <label class="ads-placement"><span><strong>Inicio · después del catálogo</strong><small>Usa Native Banner.</small></span><input class="ads-toggle" type="checkbox" name="adsPlaceCatalogBottom" ${adsChecked('adsPlaceCatalogBottom')}></label>
             <label class="ads-placement"><span><strong>Todos los perfiles · parte superior</strong><small>Usa el Banner antes de las publicaciones.</small></span><input class="ads-toggle" type="checkbox" name="adsPlaceProfileTop" ${adsChecked('adsPlaceProfileTop')}></label>
@@ -1913,10 +1994,6 @@
     function adEscape(value){
       return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
     }
-    function adFrameHtml(code,token){
-      const safeToken=JSON.stringify(String(token));
-      return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;padding:0;background:transparent;overflow:hidden}body{display:flex;justify-content:center;align-items:flex-start;min-height:1px}img,iframe,video{max-width:100%}</style></head><body>${String(code||'')}<script>(function(){const token=${safeToken};function send(){try{parent.postMessage({type:'telegvip-ad-resize',token,height:Math.max(50,document.documentElement.scrollHeight||0,document.body.scrollHeight||0)},'*')}catch(e){}}new ResizeObserver(send).observe(document.documentElement);window.addEventListener('load',send);setTimeout(send,100);setTimeout(send,600);setTimeout(send,1800);setTimeout(send,4000)})();<\/script></body></html>`;
-    }
     function adCreateSlot(id,kind,compact=false){
       let slot=document.getElementById(id);
       if(slot)return slot;
@@ -1964,35 +2041,84 @@
     }
     function adSlotAllowed(slot,cfg){
       if(!cfg.adsMasterEnabled)return false;
-      if(slot.id==='adHomeTop')return cfg.adsBannerEnabled&&cfg.adsPlaceHomeTop&&String(cfg.adsBannerCode||'').trim();
-      if(slot.id==='adHomeNative')return cfg.adsNativeEnabled&&cfg.adsPlaceCatalogBottom&&String(cfg.adsNativeCode||'').trim();
-      if(slot.id==='adProfileTop')return cfg.adsBannerEnabled&&cfg.adsPlaceProfileTop&&String(cfg.adsBannerCode||'').trim();
-      if(slot.id==='adProfileNative')return cfg.adsNativeEnabled&&cfg.adsPlaceProfileBottom&&String(cfg.adsNativeCode||'').trim();
-      if(slot.dataset.adKind==='smartlink')return cfg.adsSmartlinkEnabled&&String(cfg.adsSmartlinkUrl||'').trim();
+      const inProfile=!!selected;
+      if(slot.id==='adHomeTop')return !inProfile&&cfg.adsBannerEnabled&&cfg.adsPlaceHomeTop&&String(cfg.adsBannerCode||'').trim();
+      if(slot.id==='adHomeNative')return !inProfile&&cfg.adsNativeEnabled&&cfg.adsPlaceCatalogBottom&&String(cfg.adsNativeCode||'').trim();
+      if(slot.id==='adProfileTop')return inProfile&&cfg.adsBannerEnabled&&cfg.adsPlaceProfileTop&&String(cfg.adsBannerCode||'').trim();
+      if(slot.id==='adProfileNative')return inProfile&&cfg.adsNativeEnabled&&cfg.adsPlaceProfileBottom&&String(cfg.adsNativeCode||'').trim();
+      if(slot.id==='adHomeSmartlink')return !inProfile&&cfg.adsSmartlinkEnabled&&String(cfg.adsSmartlinkUrl||'').trim();
+      if(slot.id==='adProfileSmartlink')return inProfile&&cfg.adsSmartlinkEnabled&&String(cfg.adsSmartlinkUrl||'').trim();
       return false;
     }
-    function adRenderFrame(slot,code,cfg,routeKey){
-      const signature=adHash(code+'|'+slot.id+'|'+routeKey);
-      if(slot.dataset.adSignature===signature)return;
-      slot.dataset.adSignature=signature;
+    function adDestroySlot(slot){
+      if(!slot)return;
+      slot.querySelectorAll('script[data-telegvip-slot-script]').forEach(s=>s.remove());
       slot.innerHTML='';
-      const card=document.createElement('div');card.className='telegvip-ad-card';
-      if(cfg.adsShowLabel!==false){const label=document.createElement('span');label.className='telegvip-ad-label';label.textContent='Publicidad';card.appendChild(label)}
-      const frame=document.createElement('iframe');
-      const token='ad-'+signature+'-'+Math.random().toString(36).slice(2);
-      frame.className='telegvip-ad-frame';
-      frame.dataset.adToken=token;
-      frame.setAttribute('title','Publicidad');
-      frame.setAttribute('loading','lazy');
-      frame.setAttribute('referrerpolicy','no-referrer-when-downgrade');
-      frame.setAttribute('sandbox','allow-scripts allow-popups allow-popups-to-escape-sandbox allow-forms allow-same-origin');
-      frame.srcdoc=adFrameHtml(code,token);
-      card.appendChild(frame);slot.appendChild(card);slot.hidden=false;
+      slot.dataset.adSignature='';
+      slot.hidden=true;
+    }
+    function adParseCode(code){
+      const tpl=document.createElement('template');
+      tpl.innerHTML=String(code||'').trim();
+      const sequence=[];
+      [...tpl.content.childNodes].forEach(node=>{
+        if(node.nodeType===Node.ELEMENT_NODE&&node.tagName==='SCRIPT'){
+          sequence.push({
+            type:'script',
+            src:node.getAttribute('src')||'',
+            text:node.textContent||'',
+            attrs:[...node.attributes].reduce((o,a)=>(o[a.name]=a.value,o),{})
+          });
+        }else{
+          sequence.push({type:'node',html:node.outerHTML??node.textContent??''});
+        }
+      });
+      return sequence;
+    }
+    function adAppendDirect(slot,code){
+      const sequence=adParseCode(code);
+      sequence.forEach(part=>{
+        if(part.type==='node'){
+          const tpl=document.createElement('template');
+          tpl.innerHTML=part.html;
+          slot.appendChild(tpl.content.cloneNode(true));
+          return;
+        }
+        const script=document.createElement('script');
+        script.dataset.telegvipSlotScript='1';
+        Object.entries(part.attrs||{}).forEach(([name,value])=>{
+          if(name.toLowerCase()!=='src')script.setAttribute(name,value);
+        });
+        if(part.src)script.src=part.src;
+        if(part.text)script.textContent=part.text;
+        slot.appendChild(script);
+      });
+    }
+    function adRenderDirect(slot,code,cfg,routeKey){
+      const signature=adHash(code+'|'+slot.id+'|'+routeKey);
+      if(slot.dataset.adSignature===signature&&!slot.hidden)return;
+      adDestroySlot(slot);
+      slot.hidden=false;
+      slot.dataset.adSignature=signature;
+      if(cfg.adsShowLabel!==false){
+        const label=document.createElement('span');
+        label.className='telegvip-ad-label';
+        label.textContent='Publicidad';
+        slot.appendChild(label);
+      }
+      const card=document.createElement('div');
+      card.className='telegvip-ad-card';
+      const mount=document.createElement('div');
+      mount.className='telegvip-ad-direct';
+      card.appendChild(mount);
+      slot.appendChild(card);
+      adAppendDirect(mount,code);
     }
     function adRenderSmartlink(slot,cfg,routeKey){
       const url=String(cfg.adsSmartlinkUrl||'').trim(),signature=adHash(url+'|'+slot.id+'|'+routeKey);
-      if(slot.dataset.adSignature===signature)return;
-      slot.dataset.adSignature=signature;slot.innerHTML='';
+      if(slot.dataset.adSignature===signature&&!slot.hidden)return;
+      adDestroySlot(slot);
+      slot.dataset.adSignature=signature;
       const card=document.createElement('div');card.className='telegvip-ad-card';
       if(cfg.adsShowLabel!==false){const label=document.createElement('span');label.className='telegvip-ad-label';label.textContent='Publicidad';card.appendChild(label)}
       const link=document.createElement('a');link.className='telegvip-ad-smartlink';link.href=url;link.target='_blank';link.rel='sponsored nofollow noopener';link.innerHTML=`<span>↗</span><span>${adEscape(cfg.adsSmartlinkLabel||'Ver oferta patrocinada')}</span>`;
@@ -2003,9 +2129,9 @@
       adEnsureContainers();
       const routeKey=selected?`profile-${selected.id}`:'home';
       document.querySelectorAll('.telegvip-ad-zone').forEach(slot=>{
-        if(!adSlotAllowed(slot,cfg)){slot.hidden=true;slot.innerHTML='';slot.dataset.adSignature='';return}
-        if(slot.dataset.adKind==='banner')adRenderFrame(slot,cfg.adsBannerCode,cfg,routeKey);
-        else if(slot.dataset.adKind==='native')adRenderFrame(slot,cfg.adsNativeCode,cfg,routeKey);
+        if(!adSlotAllowed(slot,cfg)){adDestroySlot(slot);return}
+        if(slot.dataset.adKind==='banner')adRenderDirect(slot,cfg.adsBannerCode,cfg,routeKey);
+        else if(slot.dataset.adKind==='native')adRenderDirect(slot,cfg.adsNativeCode,cfg,routeKey);
         else if(slot.dataset.adKind==='smartlink')adRenderSmartlink(slot,cfg,routeKey);
       });
     }

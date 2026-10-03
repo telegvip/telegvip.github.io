@@ -1,0 +1,16 @@
+TELEGVIP V46 - PUBLICIDAD COMPACTA EN MÓVILES
+
+Corrección:
+- Banner 320x50 ahora usa un contenedor de ancho compacto y centrado.
+- Se eliminó el espacio vertical mínimo innecesario alrededor del anuncio.
+- Native Banner mantiene más ancho, pero sin tarjeta gigante.
+- Márgenes y padding reducidos en teléfonos.
+- En perfiles también se redujo el espacio vertical de los bloques publicitarios.
+- No se cambió Firebase ni los códigos de Adsterra guardados.
+- No debes volver a pegar tus scripts de anuncios.
+
+Después de subir:
+1. Push a GitHub.
+2. Espera el despliegue de GitHub Pages.
+3. Abre la web en el teléfono.
+4. Recarga sin caché / cierra y abre el navegador si conserva la versión anterior.

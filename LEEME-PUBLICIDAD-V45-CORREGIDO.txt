@@ -1,0 +1,20 @@
+TELEGVIP V45 - CORRECCIÓN ADSTERRA
+
+Problema corregido:
+- V44 cargaba Banner/Native dentro de un iframe srcdoc.
+- V44 podía cargar el mismo código simultáneamente en Inicio y Perfil, aunque una vista estuviera oculta.
+- Adsterra indica que el código debe pegarse sin modificar dentro del BODY y recomienda no repetir el mismo código para más de un bloque en una misma página.
+
+V45:
+- Ejecuta el código Adsterra directamente dentro del BODY de la web.
+- Mantiene solo UNA instancia de cada código en la vista activa.
+- En Inicio: Banner + Native.
+- Al entrar a un perfil: se retiran los bloques de Inicio y se crean Banner + Native para ese perfil.
+- No es necesario cambiar la configuración guardada en Firebase.
+- Los códigos que ya pegaste en el panel siguen sirviendo.
+
+COMPROBACIONES IMPORTANTES:
+1. En Adsterra, la unidad debe figurar Approved.
+2. Prueba la web sin AdBlock/uBlock/Brave Shields.
+3. Haz Ctrl+F5 después de publicar V45.
+4. Espera unos minutos si las unidades acaban de ser aprobadas.
