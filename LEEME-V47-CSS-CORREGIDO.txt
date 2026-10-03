@@ -1,0 +1,11 @@
+TELEGVIP V47
+
+Corrección:
+- El CSS de publicidad móvil ya no aparece escrito arriba de la web.
+- El bloque estaba como texto plano antes de </head>.
+- Ahora está correctamente dentro de <style>.
+- Se mantiene el Banner 320x50 compacto.
+- Se mantiene Native Banner con márgenes reducidos.
+- No debes volver a pegar los códigos de Adsterra.
+
+Sube esta versión a GitHub y luego haz Ctrl+F5.
